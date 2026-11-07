@@ -29,14 +29,13 @@ body {
   overflow: hidden;
 }
 
-/* Uma única arte de fundo. O centro escuro mantém o texto legível. */
+/* A arte original ocupa o fundo; a camada escura preserva a leitura. */
 .poster::before {
   content: '';
   position: absolute;
   z-index: -2;
   inset: 0;
-  background: url('assets/tropical-night.png') center / cover no-repeat;
-  opacity: .45;
+  background: url('assets/fundo.png') center / cover no-repeat;
 }
 
 .poster::after {
@@ -44,8 +43,7 @@ body {
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: linear-gradient(90deg, #05050640, #05050680 45%, #05050610),
-              linear-gradient(0deg, #050506 0%, transparent 45%, #05050650);
+  background: linear-gradient(180deg, #05050675 0%, #05050645 45%, #050506db 100%);
 }
 
 .brands {
@@ -56,23 +54,10 @@ body {
 }
 
 .zanoween {
-  color: var(--orange);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 800;
-  font-style: italic;
-  font-size: 27px;
-  letter-spacing: -1px;
-  line-height: 1;
-  transform: rotate(-4deg);
-}
-
-.zanoween small {
   display: block;
-  margin-top: 7px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 7px;
-  font-style: normal;
-  letter-spacing: 3px;
+  width: 170px;
+  height: auto;
+  flex-shrink: 0;
 }
 
 .collab { font-size: 23px; font-weight: 400; opacity: .6; }
@@ -93,26 +78,13 @@ body {
   padding: 50px 0;
 }
 
-h1 { margin: 0; font-weight: 400; }
+h1 { margin: 0; line-height: 0; }
 
-h1 > span {
+.edition-logo {
   display: block;
-  font-family: 'Shrikhand', Georgia, serif;
-  font-size: clamp(80px, 11vw, 155px);
-  letter-spacing: -.045em;
-  line-height: 1.04;
-  transform: skewX(-10deg);
-}
-
-h1 strong {
-  display: block;
-  color: var(--orange);
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  font-weight: 800;
-  font-size: clamp(60px, 8.6vw, 121px);
-  line-height: 1;
-  letter-spacing: -.055em;
+  width: min(760px, 100%);
+  height: auto;
+  margin: 0 auto;
 }
 
 .headline p {
@@ -151,14 +123,12 @@ h1 strong {
 
 @media (max-width: 600px) {
   .poster { min-height: max(640px, 100svh); padding: 36px 20px; }
-  .poster::before { background-position: 65% center; opacity: .32; }
-  .brands { gap: 20px; }
-  .zanoween { font-size: 23px; }
+  .poster::before { background-position: 60% center; }
+  .brands { gap: 16px; }
+  .zanoween { width: 130px; }
   .kawaii { font-size: 25px; }
   .kawaii span { font-size: 32px; }
   .headline { padding: 55px 0; }
-  h1 > span { font-size: clamp(58px, 16.7vw, 100px); }
-  h1 strong { font-size: clamp(48px, 13.2vw, 79px); }
   .headline p { font-size: 10px; margin-top: 25px; }
   .event-info { font-size: 11px; gap: 18px; }
   .address-note { font-size: 8px; }
