@@ -154,11 +154,65 @@ h1 { margin: 0; line-height: 0; }
   background: linear-gradient(to bottom, #ffffff00 0%, #ffffff14 18%, #ffffff66 42%, #ffffffc7 68%, #fffffff5 88%, #ffffff 100%);
 }
 
-.future-content {
+.vibe-section {
   min-height: 60svh;
   background: #ffffff;
   color: var(--black);
   color-scheme: light;
+  padding: 24px 40px 100px;
+}
+
+.vibe-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.vibe-visual { display: block; width: 100%; height: auto; }
+
+/* A arte tem letras claras: o painel sólido mantém o contraste original. */
+.vibe-copy {
+  min-width: 0;
+  padding: 38px 32px;
+  border-radius: 26px;
+  background: #24160f;
+  text-align: center;
+}
+
+.vibe-copy h2 { margin: 0; line-height: 0; }
+.vibe-copy h2 img { display: block; width: 100%; height: auto; }
+
+.vibe-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-top: 28px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: var(--orange);
+  color: #201006;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .2s;
+}
+
+.vibe-whatsapp svg { width: 21px; height: 21px; }
+.vibe-whatsapp span { margin-left: 12px; font-size: 20px; line-height: 1; }
+.vibe-whatsapp:hover { background: #ff8147; }
+.vibe-whatsapp:focus-visible { outline: 2px solid var(--cream); outline-offset: 5px; }
+
+@media (max-width: 800px) {
+  .vibe-section { padding: 16px 24px 70px; }
+  .vibe-layout { grid-template-columns: 1fr; gap: 24px; max-width: 600px; }
+  .vibe-visual { max-width: 540px; margin: 0 auto; }
+  .vibe-copy { padding: 30px 24px; border-radius: 22px; }
+  .vibe-whatsapp { margin-top: 24px; }
 }
 
 @media (max-width: 600px) {
