@@ -28,6 +28,8 @@ A página inteira compartilha um único fundo fixo e desfocado, sem cortes entre
 
 ## Parte de baixo
 
+A seção inferior é uma faixa glass de largura total, com superfície translúcida e `backdrop-filter`. O fundo único continua por trás dela. O afastamento do topo e os espaços entre destaques, fotos e textos são definidos em `.party-section`, `.party-highlights`, `.polaroids` e `.community`, em `dist/style.css`. Sem suporte a `backdrop-filter`, a superfície mantém sua tonalidade translúcida.
+
 Os destaques Open Bar, DJ Set e Ambiente Temático e o texto da festa seguem a referência fornecida. As fotos são ilustrativas, geradas com a ferramenta integrada ImageGen; não representam registros do local ou de edições anteriores. O link do grupo de WhatsApp foi fornecido pelo organizador e abre em uma nova aba.
 
 As três imagens foram geradas separadamente com o prefixo:
