@@ -27,3 +27,9 @@ As duas imagens originais ficam lado a lado no desktop e empilhadas no celular. 
 O layout e o botão estão nas classes `.vibe-layout`, `.vibe-intro`, `.vibe-benefits` e `.vibe-whatsapp`. A borda superior é definida em `.vibe-section`.
 
 Horário e link de ingressos ainda não foram fornecidos. O endereço completo continua reservado para depois da compra.
+
+## Edição anterior
+
+A seção `.recap-section` apresenta o texto editorial à esquerda e a imagem original `dist/assets/Moldura Tropical com Flores e Folhagem.png` à direita. O espaço da mídia fica na abertura da moldura, mantendo flores e folhas por cima. No celular, o texto aparece antes da moldura.
+
+O vídeo oficial ainda não foi informado. Por enquanto, o espaço mostra “Vídeo da edição anterior — Em breve”, sem controles ou duração fictícios. Quando o vídeo for fornecido, substituir o conteúdo de `.recap-media` pelo player correspondente. As imagens e o título dessa seção não alteram a primeira dobra nem a composição Vibe do Verão.
