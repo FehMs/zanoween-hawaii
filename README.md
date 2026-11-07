@@ -21,6 +21,8 @@ Quando a venda abrir, substitua o botão desabilitado por um link para o endere�
 
 Paleta baseada no guia fornecido. Fontes Shrikhand, Barlow Condensed e Montserrat; os arquivos originais de Kahlua e dos logos não estavam disponíveis. Os nomes das marcas são compostos em texto.
 
+O título HAWAII usa Shrikhand em maiúsculas com inclinação como aproximação visual. EDITION usa Montserrat ExtraBold Italic (800). Para reproduzir exatamente o lettering da referência, falta o arquivo original de Kahlua ou o título em SVG/PNG transparente.
+
 Arte criada com a ferramenta integrada ImageGen.
 
 Prompt: Premium photographic background for a Brazilian tropical night party, Zanoween Hawaii Edition. Wide 3:2. Near-black warm brown background with burnt orange light, palm shadows, fine sand along bottom. Fiery orange hibiscus and deep green palm leaves in the right third. Left two thirds dark and empty for HTML typography. Luxury underground tropical festival, analog grain, crisp petals. Palette #050506 #2A1A12 #FF5A17 #C63D00. No lettering, logo, watermark or borders.

@@ -99,19 +99,20 @@ h1 > span {
   display: block;
   font-family: 'Shrikhand', Georgia, serif;
   font-size: clamp(80px, 11vw, 155px);
-  letter-spacing: -.055em;
-  line-height: 1.12;
+  letter-spacing: -.045em;
+  line-height: 1.04;
+  transform: skewX(-10deg);
 }
 
 h1 strong {
   display: block;
   color: var(--orange);
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-style: italic;
   font-weight: 800;
-  font-size: clamp(76px, 10.7vw, 150px);
-  line-height: .88;
-  letter-spacing: -.025em;
+  font-size: clamp(60px, 8.6vw, 121px);
+  line-height: 1;
+  letter-spacing: -.055em;
 }
 
 .headline p {
@@ -156,8 +157,8 @@ h1 strong {
   .kawaii { font-size: 25px; }
   .kawaii span { font-size: 32px; }
   .headline { padding: 55px 0; }
-  h1 > span { font-size: clamp(73px, 19vw, 113px); }
-  h1 strong { font-size: clamp(70px, 18.5vw, 110px); }
+  h1 > span { font-size: clamp(58px, 16.7vw, 100px); }
+  h1 strong { font-size: clamp(48px, 13.2vw, 79px); }
   .headline p { font-size: 10px; margin-top: 25px; }
   .event-info { font-size: 11px; gap: 18px; }
   .address-note { font-size: 8px; }
