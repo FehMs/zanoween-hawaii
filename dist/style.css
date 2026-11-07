@@ -18,6 +18,11 @@ body {
 
 ::selection { background: var(--orange); color: var(--black); }
 
+main {
+  position: relative;
+  isolation: isolate;
+}
+
 .poster {
   position: relative;
   isolation: isolate;
@@ -29,22 +34,24 @@ body {
   overflow: hidden;
 }
 
-/* A arte original ocupa o fundo; a camada escura preserva a leitura. */
-.poster::before {
+/* Um único fundo fixo para todas as seções, sem reiniciar a imagem na rolagem. */
+main::before {
   content: '';
-  position: absolute;
+  position: fixed;
   z-index: -2;
   inset: -10px;
   background: url('assets/fundo.png') center / cover no-repeat;
   filter: blur(3px);
+  pointer-events: none;
 }
 
-.poster::after {
+main::after {
   content: '';
-  position: absolute;
+  position: fixed;
   z-index: -1;
   inset: 0;
-  background: linear-gradient(180deg, #05050675 0%, #05050645 45%, #050506db 100%);
+  background: linear-gradient(180deg, #05050675 0%, #05050665 45%, #050506c9 100%);
+  pointer-events: none;
 }
 
 .brands {
@@ -128,23 +135,6 @@ h1 { margin: 0; line-height: 0; }
   overflow: hidden;
   padding: 55px 24px 110px;
   text-align: center;
-}
-
-.party-section::before {
-  content: '';
-  position: absolute;
-  z-index: -2;
-  inset: -10px;
-  background: url('assets/fundo.png') center bottom / cover no-repeat;
-  filter: blur(3px);
-}
-
-.party-section::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: linear-gradient(180deg, var(--black) 0%, #150c06b3 20%, #1a0b04a6 55%, #1007048c 100%);
 }
 
 .party-content { max-width: 860px; margin: 0 auto; }
@@ -233,7 +223,7 @@ a.whatsapp-button:focus-visible { outline: 2px solid var(--cream); outline-offse
 
 @media (max-width: 600px) {
   .poster { min-height: max(640px, 100svh); padding: 36px 20px; }
-  .poster::before { background-position: 60% center; }
+  main::before { background-position: 60% center; }
   .brands { gap: 16px; }
   .zanoween { width: 130px; }
   .kawaii { font-size: 25px; }

@@ -24,7 +24,7 @@ Quando a venda abrir, substitua o botão desabilitado por um link para o endere�
 
 Fundo, título Hawaii Edition e logo Zanoween 2K26 usam as imagens originais fornecidas, sem recriar a tipografia. As imagens mantêm suas proporções e a transparência. Montserrat é usada apenas nos textos de apoio; Kawaii continua composto em texto.
 
-A camada escura do fundo pode ser ajustada em `.poster::after`, em `dist/style.css`. O tamanho do título é controlado por `.edition-logo` e o do logo superior por `.zanoween`.
+A página inteira compartilha um único fundo fixo e desfocado, sem cortes entre as seções. A camada escura pode ser ajustada em `main::after`, em `dist/style.css`, e o desfoque de 3px em `main::before`. O tamanho do título é controlado por `.edition-logo` e o do logo superior por `.zanoween`.
 
 ## Parte de baixo
 
