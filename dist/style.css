@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   color-scheme: dark;
   --black: #050506;
   --cream: #eee9de;
@@ -129,119 +129,37 @@ h1 { margin: 0; line-height: 0; }
 
 .ticket:disabled { opacity: 1; cursor: default; }
 
-.party-section {
+/* O desfoque cresce antes de o fundo se dissolver no branco. */
+.hero-transition {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  margin-top: clamp(64px, 8vw, 120px);
-  padding: 0 24px 100px;
-  text-align: center;
+  height: clamp(180px, 24vw, 320px);
+  pointer-events: none;
 }
 
-.party-content {
-  display: grid;
-  gap: 28px;
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-/* O vidro fica apenas em cada camada; os gaps revelam o fundo original. */
-.glass-layer {
-  min-width: 0;
-  background: linear-gradient(115deg, #eee9de12 0%, #eee9de04 50%, #eee9de0c 100%), #130e0a45;
-  border: 1px solid #eee9de26;
-  border-radius: 28px;
-  -webkit-backdrop-filter: blur(18px) saturate(1.1);
-  backdrop-filter: blur(18px) saturate(1.1);
-  box-shadow: inset 0 1px 0 #ffffff08, 0 12px 40px #00000020;
-}
-
-.party-highlights {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: center;
-  gap: 12px;
-  margin: 0;
-  padding: 32px 24px;
-  list-style: none;
-}
-
-.party-highlights li { min-width: 0; }
-.party-highlights img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 2.65;
-  object-fit: contain;
-}
-
-.polaroids { display: flex; justify-content: center; align-items: center; padding: 60px 42px; }
-
-.polaroid {
-  position: relative;
-  flex: 1 1 0;
-  max-width: 225px;
-  min-width: 0;
-  margin: 0 -6px;
-  padding: 8px 8px 17px;
-  background: #dfc29a;
-  box-shadow: 0 12px 25px #0006;
-  transform: rotate(-8deg);
-}
-
-.polaroid::before {
+.hero-transition::before,
+.hero-transition::after {
   content: '';
   position: absolute;
-  z-index: 1;
-  width: 66px;
-  height: 24px;
-  top: -13px;
-  left: calc(50% - 33px);
-  background: #ba976d9c;
-  transform: rotate(4deg);
+  inset: 0;
 }
 
-.polaroid:nth-child(2) { transform: rotate(6deg); z-index: 1; }
-.polaroid:nth-child(2)::before { transform: rotate(-5deg); }
-.polaroid:nth-child(3) { transform: rotate(10deg); }
-.polaroid img { display: block; width: 100%; height: auto; aspect-ratio: 1.15; object-fit: cover; }
-
-.party-section h2 {
-  margin: 0 0 20px;
-  font-family: 'Shrikhand', Georgia, serif;
-  font-size: clamp(27px, 3vw, 40px);
-  font-weight: 400;
-  text-transform: uppercase;
-  line-height: 1.2;
-  transform: skewX(-8deg);
-  text-shadow: 0 2px 12px #0005;
+.hero-transition::before {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 50%);
+  mask-image: linear-gradient(to bottom, transparent, #000 50%);
 }
 
-.party-heading { display: flex; justify-content: center; align-items: center; gap: 25px; }
-.party-heading::before, .party-heading::after { content: ''; width: 90px; height: 1px; background: var(--orange); }
-.party-section p { max-width: 450px; margin: 0 auto; font-size: 13px; line-height: 1.85; color: #eee9ded9; text-wrap: pretty; }
-.party-description, .community { padding: 48px 32px; }
-.community h2 { margin-bottom: 15px; }
-
-.whatsapp-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  margin-top: 23px;
-  padding: 10px 30px;
-  border: 1.5px solid var(--orange);
-  border-radius: 9px;
-  background: #180b0570;
-  color: var(--orange);
-  font: 700 12px 'Montserrat', sans-serif;
-  text-decoration: none;
+.hero-transition::after {
+  background: linear-gradient(to bottom, #ffffff00 0%, #ffffff14 18%, #ffffff66 42%, #ffffffc7 68%, #fffffff5 88%, #ffffff 100%);
 }
 
-.whatsapp-button svg { width: 21px; height: 21px; }
-a.whatsapp-button:hover { background: var(--orange); color: var(--black); }
-a.whatsapp-button:focus-visible { outline: 2px solid var(--cream); outline-offset: 5px; }
+.future-content {
+  min-height: 60svh;
+  background: #ffffff;
+  color: var(--black);
+  color-scheme: light;
+}
 
 @media (max-width: 600px) {
   .poster { min-height: max(640px, 100svh); padding: 36px 20px; }
@@ -254,25 +172,4 @@ a.whatsapp-button:focus-visible { outline: 2px solid var(--cream); outline-offse
   .headline p { font-size: 10px; margin-top: 25px; }
   .event-info { font-size: 11px; gap: 18px; }
   .address-note { font-size: 8px; }
-  .party-section {
-    margin-top: 60px;
-    padding: 0 16px 70px;
-  }
-  .party-content { gap: 20px; }
-  .glass-layer {
-    border-radius: 20px;
-    -webkit-backdrop-filter: blur(14px) saturate(1.1);
-    backdrop-filter: blur(14px) saturate(1.1);
-  }
-  .party-highlights { padding: 22px 10px; gap: 6px; }
-  .polaroids { padding: 40px 22px; }
-  .polaroid { padding: 4px 4px 9px; margin: 0 -4px; }
-  .polaroid::before { width: 35px; height: 14px; top: -8px; left: calc(50% - 17px); }
-  .party-section h2 { font-size: 25px; margin-bottom: 15px; }
-  .party-heading { gap: 17px; }
-  .party-heading::before, .party-heading::after { width: 55px; }
-  .party-section p { max-width: 320px; font-size: 11px; line-height: 1.8; }
-  .party-description, .community { padding: 34px 20px; }
-  .community h2 { font-size: 24px; }
-  .whatsapp-button { font-size: 11px; padding: 9px 25px; min-height: 44px; }
 }
