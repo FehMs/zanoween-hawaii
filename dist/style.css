@@ -122,6 +122,115 @@ h1 { margin: 0; line-height: 0; }
 
 .ticket:disabled { opacity: 1; cursor: default; }
 
+.party-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 55px 24px 110px;
+  text-align: center;
+}
+
+.party-section::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  inset: -10px;
+  background: url('assets/fundo.png') center bottom / cover no-repeat;
+  filter: blur(3px);
+}
+
+.party-section::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, var(--black) 0%, #150c06b3 20%, #1a0b04a6 55%, #1007048c 100%);
+}
+
+.party-content { max-width: 860px; margin: 0 auto; }
+
+.party-highlights {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 720px;
+  margin: 0 auto 85px;
+  padding: 0;
+  list-style: none;
+}
+
+.party-highlights li { display: grid; justify-items: center; gap: 13px; padding: 0 15px; }
+.party-highlights li + li { border-left: 1px solid #ff5a1738; }
+.party-highlights svg { width: 35px; height: 35px; color: var(--orange); }
+.party-highlights span { font-size: 9px; font-weight: 700; text-transform: uppercase; }
+
+.polaroids { display: flex; justify-content: center; align-items: center; padding: 0 15px; margin-bottom: 65px; }
+
+.polaroid {
+  position: relative;
+  flex: 1 1 0;
+  max-width: 245px;
+  min-width: 0;
+  margin: 0 -6px;
+  padding: 8px 8px 17px;
+  background: #dfc29a;
+  box-shadow: 0 12px 25px #0006;
+  transform: rotate(-8deg);
+}
+
+.polaroid::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  width: 66px;
+  height: 24px;
+  top: -13px;
+  left: calc(50% - 33px);
+  background: #ba976d9c;
+  transform: rotate(4deg);
+}
+
+.polaroid:nth-child(2) { transform: rotate(6deg); z-index: 1; }
+.polaroid:nth-child(2)::before { transform: rotate(-5deg); }
+.polaroid:nth-child(3) { transform: rotate(10deg); }
+.polaroid img { display: block; width: 100%; height: auto; aspect-ratio: 1.15; object-fit: cover; }
+
+.party-section h2 {
+  margin: 0 0 20px;
+  font-family: 'Shrikhand', Georgia, serif;
+  font-size: clamp(27px, 3vw, 40px);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.2;
+  transform: skewX(-8deg);
+  text-shadow: 0 2px 12px #0005;
+}
+
+.party-heading { display: flex; justify-content: center; align-items: center; gap: 25px; }
+.party-heading::before, .party-heading::after { content: ''; width: 90px; height: 1px; background: var(--orange); }
+.party-section p { max-width: 450px; margin: 0 auto; font-size: 13px; line-height: 1.85; color: #eee9ded9; text-wrap: pretty; }
+.community { margin-top: 95px; }
+.community h2 { margin-bottom: 15px; }
+
+.whatsapp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  margin-top: 23px;
+  padding: 10px 30px;
+  border: 1.5px solid var(--orange);
+  border-radius: 9px;
+  background: #180b0570;
+  color: var(--orange);
+  font: 700 12px 'Montserrat', sans-serif;
+  text-decoration: none;
+}
+
+.whatsapp-button svg { width: 21px; height: 21px; }
+a.whatsapp-button:hover { background: var(--orange); color: var(--black); }
+a.whatsapp-button:focus-visible { outline: 2px solid var(--cream); outline-offset: 5px; }
+
 @media (max-width: 600px) {
   .poster { min-height: max(640px, 100svh); padding: 36px 20px; }
   .poster::before { background-position: 60% center; }
@@ -133,4 +242,19 @@ h1 { margin: 0; line-height: 0; }
   .headline p { font-size: 10px; margin-top: 25px; }
   .event-info { font-size: 11px; gap: 18px; }
   .address-note { font-size: 8px; }
+  .party-section { padding: 35px 20px 85px; }
+  .party-highlights { margin-bottom: 55px; }
+  .party-highlights li { padding: 0 6px; gap: 9px; }
+  .party-highlights svg { width: 27px; height: 27px; }
+  .party-highlights span { font-size: 8px; line-height: 1.4; }
+  .polaroids { padding: 0 5px; margin-bottom: 42px; }
+  .polaroid { padding: 4px 4px 9px; margin: 0 -4px; }
+  .polaroid::before { width: 35px; height: 14px; top: -8px; left: calc(50% - 17px); }
+  .party-section h2 { font-size: 25px; margin-bottom: 15px; }
+  .party-heading { gap: 17px; }
+  .party-heading::before, .party-heading::after { width: 55px; }
+  .party-section p { max-width: 320px; font-size: 11px; line-height: 1.8; }
+  .community { margin-top: 65px; }
+  .community h2 { font-size: 24px; }
+  .whatsapp-button { font-size: 11px; padding: 9px 25px; min-height: 44px; }
 }

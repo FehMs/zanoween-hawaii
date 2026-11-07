@@ -9,12 +9,13 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Shrikhand&display=swap" rel="stylesheet">
   <link rel="preload" href="assets/fundo.png" as="image">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="poster">
+  <main>
+  <section class="poster" aria-label="Zanoween Hawaii Edition">
     <div class="brands" aria-label="Zanoween em parceria com Kawaii">
       <img class="zanoween" src="assets/zanoween-logo.png" alt="Zanoween 2K26" width="2172" height="724">
       <span class="collab" aria-hidden="true">×</span>
@@ -36,6 +37,50 @@
       <!-- Quando a venda abrir, substitua este botão por um link para a bilheteria. -->
       <button class="ticket" type="button" disabled>Ingressos em breve</button>
     </div>
+  </section>
+
+  <section class="party-section" aria-labelledby="party-title">
+    <div class="party-content">
+      <ul class="party-highlights" aria-label="Destaques da festa">
+        <li>
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h22L16 21 5 9Zm11 12v8m-6 0h12M18 9l7-7M8 5h9"/><path d="M23 5a4 4 0 0 1 5 5"/></svg>
+          <span>Open bar</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 18v-4a11 11 0 0 1 22 0v4M5 16H3v10h5V16H5Zm22 0h2v10h-5V16h3Z"/></svg>
+          <span>DJ set</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 14C2-3 2 20 13 17 0 27 22 34 18 19c14 10 19-12 4-8C28-2 8-2 16 14Z"/><circle cx="17" cy="16" r="3" fill="#4b220d"/></svg>
+          <span>Ambiente temático</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 3.5 9.5L29 16l-9.5 3.5L16 29l-3.5-9.5L3 16l9.5-3.5L16 3Zm10-1v6m-3-3h6"/></svg>
+          <span>E muito mais</span>
+        </li>
+      </ul>
+
+      <div class="polaroids" aria-label="Inspiração tropical da Hawaii Edition">
+        <figure class="polaroid"><img src="assets/palmeiras.png" alt="Palmeiras em silhueta sob um céu alaranjado ao pôr do sol" width="1536" height="1024" loading="lazy" decoding="async"></figure>
+        <figure class="polaroid"><img src="assets/hibisco.png" alt="Hibisco laranja sobre a areia dourada" width="1536" height="1024" loading="lazy" decoding="async"></figure>
+        <figure class="polaroid"><img src="assets/praia.png" alt="Sol se pondo no mar, com ondas suaves na praia" width="1536" height="1024" loading="lazy" decoding="async"></figure>
+      </div>
+
+      <div class="party-description">
+        <h2 class="party-heading" id="party-title"><span>A festa</span></h2>
+        <p>Uma noite tropical, intensa e inesquecível.<br>A Hawaii Edition traz a vibe do verão para uma experiência única, com muita música, open bar e um ambiente totalmente temático.</p>
+      </div>
+
+      <div class="community" aria-labelledby="community-title">
+        <h2 id="community-title">Fique por dentro</h2>
+        <p>Entre no grupo e receba todas as novidades,<br>lotes e informações em primeira mão.</p>
+        <a class="whatsapp-button" href="https://chat.whatsapp.com/C423ygeW2kRIcbW1St7Xak?mode=wwt" target="_blank" rel="noopener noreferrer" aria-label="Entrar no grupo de WhatsApp (abre em nova aba)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3 20.5l1.4-4.8a8.5 8.5 0 1 1 16.1-4.1Z"/><path d="m8.3 7.6 1.2-.2 1 2.4-.9 1a7.5 7.5 0 0 0 3.7 3.7l1-.9 2.4 1-.2 1.2c-.2 1.2-1.8 1.8-3 1.4-3.4-1-6-3.6-7-7-.3-1.1.5-2.4 1.8-2.6Z"/></svg>
+          Entrar no grupo
+        </a>
+      </div>
+    </div>
+  </section>
   </main>
 </body>
 </html>
