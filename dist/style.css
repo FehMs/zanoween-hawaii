@@ -158,16 +158,22 @@ h1 { margin: 0; line-height: 0; }
 
 .party-highlights {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: 12px;
   margin: 0;
   padding: 32px 24px;
   list-style: none;
 }
 
-.party-highlights li { display: grid; justify-items: center; gap: 13px; padding: 0 15px; }
-.party-highlights li + li { border-left: 1px solid #ff5a1738; }
-.party-highlights svg { width: 35px; height: 35px; color: var(--orange); }
-.party-highlights span { font-size: 9px; font-weight: 700; text-transform: uppercase; }
+.party-highlights li { min-width: 0; }
+.party-highlights img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.65;
+  object-fit: contain;
+}
 
 .polaroids { display: flex; justify-content: center; align-items: center; padding: 60px 42px; }
 
@@ -258,10 +264,7 @@ a.whatsapp-button:focus-visible { outline: 2px solid var(--cream); outline-offse
     -webkit-backdrop-filter: blur(14px) saturate(1.1);
     backdrop-filter: blur(14px) saturate(1.1);
   }
-  .party-highlights { padding: 28px 10px; }
-  .party-highlights li { padding: 0 6px; gap: 9px; }
-  .party-highlights svg { width: 27px; height: 27px; }
-  .party-highlights span { font-size: 8px; line-height: 1.4; }
+  .party-highlights { padding: 22px 10px; gap: 6px; }
   .polaroids { padding: 40px 22px; }
   .polaroid { padding: 4px 4px 9px; margin: 0 -4px; }
   .polaroid::before { width: 35px; height: 14px; top: -8px; left: calc(50% - 17px); }

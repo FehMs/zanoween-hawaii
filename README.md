@@ -30,6 +30,8 @@ A página inteira compartilha um único fundo fixo e desfocado, sem cortes entre
 
 A seção inferior tem quatro containers glass independentes: destaques, fotos, texto da festa e grupo. Cada `.glass-layer` tem superfície translúcida, `backdrop-filter`, borda e cantos arredondados. `.party-content` define o gap entre eles, deixando o fundo original visível nos intervalos. A seção inteira não recebe efeito de vidro. Sem suporte a `backdrop-filter`, cada superfície mantém sua tonalidade translúcida.
 
+Os benefícios usam quatro imagens originais, em uma única linha e nesta ordem: `faixa-open-bar.png`, `Estandarte de Papel Amarrotado DJ Set.png`, `zanoween_ambiente_tematico_transparente.png` e `zanoween_e_muito_mais_transparente.png`. A grade preserva quatro colunas também no celular; as imagens mantêm suas proporções com `object-fit: contain`.
+
 Os destaques Open Bar, DJ Set e Ambiente Temático e o texto da festa seguem a referência fornecida. As fotos são ilustrativas, geradas com a ferramenta integrada ImageGen; não representam registros do local ou de edições anteriores. O link do grupo de WhatsApp foi fornecido pelo organizador e abre em uma nova aba.
 
 As três imagens foram geradas separadamente com o prefixo:
