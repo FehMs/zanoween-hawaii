@@ -30,6 +30,16 @@ Horário e link de ingressos ainda não foram fornecidos. O endereço completo c
 
 ## Edição anterior
 
-A seção `.recap-section` apresenta o texto editorial à esquerda e a imagem original `dist/assets/Moldura Tropical com Flores e Folhagem.png` à direita. O espaço da mídia fica na abertura da moldura, mantendo flores e folhas por cima. No celular, o texto aparece antes da moldura.
+A seção `.recap-section` apresenta o texto editorial à esquerda e a imagem `dist/assets/Moldura Tropical Vertical em Tons Vibrantes.png` à direita. O espaço da mídia usa a proporção vertical 9:16 na abertura da moldura, mantendo flores e folhas por cima. No celular, o texto aparece antes da moldura centralizada.
 
-O vídeo oficial ainda não foi informado. Por enquanto, o espaço mostra “Vídeo da edição anterior — Em breve”, sem controles ou duração fictícios. Quando o vídeo for fornecido, substituir o conteúdo de `.recap-media` pelo player correspondente. As imagens e o título dessa seção não alteram a primeira dobra nem a composição Vibe do Verão.
+O vídeo da edição anterior está incorporado pelo Vimeo em `.recap-media`, sem controles, no mudo e em loop. O script `dist/recap-video.js` usa o SDK do Vimeo e IntersectionObserver para reproduzir quando o vídeo aparece na tela e pausar quando sai ou a aba fica oculta. A reprodução automática depende das permissões do navegador; ocultar a interface também depende das opções disponíveis na conta Vimeo. O parâmetro `h=49a77ddf5e` preserva o acesso ao vídeo não listado e deve permanecer no endereço do player. O arquivo de vídeo fica hospedado no Vimeo e não entra no deploy do site.
+
+## Publicar na Vercel
+
+A última seção, `#ingressos`, apresenta três lotes em cartões inspirados em bilhetes, com o primeiro em destaque e os valores “A divulgar”. As vendas permanecem “Em breve” até a confirmação dos preços e do link da bilheteria. O botão superior “Ver ingressos” leva a essa seção. O link de novidades abre o grupo oficial de WhatsApp.
+
+Importe o repositório na Vercel com a pasta `zanoween` como raiz (a pasta que contém este README e `vercel.json`). Use o preset Other, sem comando de build e com saída `dist`. O arquivo `vercel.json` já define a pasta de saída.
+
+Para vídeo no próprio projeto, coloque o MP4 em `dist/assets/` e substitua o placeholder por `<video controls playsinline preload="metadata" src="assets/edicao-anterior.mp4"></video>`. O arquivo será incluído no deploy e a reprodução consumirá transferência de dados da hospedagem.
+
+Como alternativa, hospede o vídeo no Vimeo e substitua o placeholder pelo iframe de incorporação fornecido pela plataforma. O CSS já dimensiona o player na abertura vertical. Nesse caso, o MP4 não precisa entrar no repositório nem no deploy.

@@ -34,8 +34,7 @@
         <span>Espaço Limão</span>
       </p>
       <p class="address-note">Endereço revelado após a compra.</p>
-      <!-- Quando a venda abrir, substitua este botão por um link para a bilheteria. -->
-      <button class="ticket" type="button" disabled>Ingressos em breve</button>
+      <a class="ticket" href="#ingressos">Ver ingressos <span aria-hidden="true">↓</span></a>
     </div>
   </section>
 
@@ -67,17 +66,71 @@
       <div class="recap-copy">
         <p class="recap-eyebrow">Edição anterior</p>
         <h2 id="recap-title">Confira <br>como foi <br>a última <br>festa</h2>
-        <p class="recap-description">Dê o play e reviva os melhores momentos da edição passada.</p>
+        <p class="recap-description">Reviva os melhores momentos da edição passada.</p>
       </div>
       <figure class="recap-frame">
         <div class="recap-media">
-          <!-- O vídeo oficial será inserido aqui quando o link for informado. -->
-          <div class="recap-placeholder"><span>Vídeo da edição anterior</span><small>Em breve</small></div>
+          <iframe id="recap-video" src="https://player.vimeo.com/video/1246142314?h=49a77ddf5e&amp;background=1&amp;autoplay=0&amp;muted=1&amp;loop=1&amp;controls=0&amp;playsinline=1&amp;title=0&amp;byline=0&amp;portrait=0" title="Vídeo da edição anterior do Zanoween" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe>
         </div>
-        <img class="recap-frame-art" src="assets/Moldura%20Tropical%20com%20Flores%20e%20Folhagem.png" alt="" aria-hidden="true" width="1536" height="1024" loading="lazy" decoding="async">
+        <img class="recap-frame-art" src="assets/Moldura%20Tropical%20Vertical%20em%20Tons%20Vibrantes.png" alt="" aria-hidden="true" width="941" height="1672" loading="lazy" decoding="async">
       </figure>
     </div>
   </section>
+  <section class="tickets-section" id="ingressos" aria-labelledby="tickets-title">
+    <div class="tickets-inner">
+      <header class="tickets-heading">
+        <p class="tickets-eyebrow">Ingressos</p>
+        <h2 id="tickets-title">Garanta o seu ingresso</h2>
+        <svg class="tickets-stroke" viewBox="0 0 240 24" aria-hidden="true"><path d="M3 20C65 3 159 0 237 9 153 7 71 14 3 20Z" fill="currentColor"/></svg>
+        <p class="tickets-intro">Seu próximo encontro com a vibe do verão.</p>
+      </header>
+
+      <div class="tickets-grid">
+        <article class="ticket-card ticket-card-featured" aria-labelledby="lot-one">
+          <span class="ticket-badge">Abertura em breve</span>
+          <h3 id="lot-one">1º lote</h3>
+          <p class="ticket-price">A divulgar</p>
+          <p class="ticket-detail">A primeira chance de garantir seu lugar.</p>
+          <div class="ticket-perforation" aria-hidden="true"></div>
+          <!-- Substitua este botão pelo link da bilheteria quando a venda abrir. -->
+          <button class="ticket-action ticket-action-primary" type="button" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 3 6 6-3 3a3 3 0 0 0-4 4l-3 3-6-6 3-3a3 3 0 0 0 4-4l3-3Z"/><path d="m13 8 1 1m2 2 1 1"/></svg>
+            Vendas em breve
+          </button>
+        </article>
+
+        <article class="ticket-card" aria-labelledby="lot-two">
+          <h3 id="lot-two">2º lote</h3>
+          <p class="ticket-price">A divulgar</p>
+          <p class="ticket-detail">Mais uma chance de viver essa edição.</p>
+          <div class="ticket-perforation" aria-hidden="true"></div>
+          <button class="ticket-action" type="button" disabled>Em breve</button>
+        </article>
+
+        <article class="ticket-card" aria-labelledby="lot-three">
+          <h3 id="lot-three">3º lote</h3>
+          <p class="ticket-price">A divulgar</p>
+          <p class="ticket-detail">A última chamada para o Hawaii.</p>
+          <div class="ticket-perforation" aria-hidden="true"></div>
+          <button class="ticket-action" type="button" disabled>Em breve</button>
+        </article>
+      </div>
+
+      <ul class="tickets-included" aria-label="O que te espera na festa">
+        <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h22L16 20 5 8Zm11 12v9m-6 0h12M19 8l6-6"/></svg><span>Open bar</span></li>
+        <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 18v-4a11 11 0 0 1 22 0v4M3 16h5v12H3V16Zm21 0h5v12h-5V16Z"/></svg><span>DJ set</span></li>
+        <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 3.5 9.5L29 16l-9.5 3.5L16 29l-3.5-9.5L3 16l9.5-3.5L16 3Z"/></svg><span>Ambiente temático</span></li>
+      </ul>
+
+      <div class="tickets-notify">
+        <p>Não perca a abertura das vendas.</p>
+        <a href="https://chat.whatsapp.com/C423ygeW2kRIcbW1St7Xak?mode=wwt" target="_blank" rel="noopener noreferrer">Entre no grupo e acompanhe as novidades <span aria-hidden="true">↗</span><span class="sr-only"> (abre em nova aba)</span></a>
+      </div>
+      <p class="tickets-signoff">Zanoween × Kawaii <span aria-hidden="true">✺</span> Hawaii Edition · 12.12.26</p>
+    </div>
+  </section>
   </main>
+  <script src="https://player.vimeo.com/api/player.js" defer></script>
+  <script src="recap-video.js" defer></script>
 </body>
 </html>
