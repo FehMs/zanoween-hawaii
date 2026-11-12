@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Entrada · Zanoween</title><link rel="stylesheet" href="entrada.css"></head>
+<body><main><p class="eyebrow">Zanoween · Equipe</p><h1>Controle de entrada</h1><p>Consulte o ingresso e confira o nome no RG antes de liberar a entrada.</p>
+<form id="entry-form"><label>Código de acesso da equipe<input name="staffCode" type="password" autocomplete="off" required minlength="32"></label><label>Código do ingresso<input name="ticketCode" type="text" required placeholder="Código que consta no e-mail" autocomplete="off" spellcheck="false"></label><button type="submit">Consultar ingresso</button></form>
+<section id="entry-person" hidden><h2 id="entry-name"></h2><label class="check"><input id="rg-checked" type="checkbox">Conferi o RG e o nome corresponde ao ingresso.</label><button id="confirm-entry" type="button">Confirmar entrada</button></section><p id="entry-result" role="status"></p></main><script src="entrada.js" defer></script></body></html>

@@ -1,0 +1,17 @@
+{
+  "name": "zanoween",
+  "private": true,
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env.local server/dev.cjs",
+    "test": "node tests/run.cjs",
+    "supabase:check": "node --env-file-if-exists=.env.local scripts/check-supabase.cjs",
+    "checkout:check": "node --env-file-if-exists=.env.local scripts/check-checkout.cjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16"
+  }
+}

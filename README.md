@@ -1,45 +1,57 @@
-﻿# Zanoween — Hawaii Edition
+# Zanoween — Hawaii Edition
 
-Site estático em HTML e CSS, sem instalação ou build.
+Frontend estático em `dist/`, sem build. APIs Node 22 ou superior em `api/` e `server/`, integradas ao Supabase, Mercado Pago Orders e Resend. O código de produção não usa dependências externas de runtime; PGlite é usado somente na suíte automatizada de verificação.
 
-## Visual atual
+## Localhost
 
-A primeira dobra mantém o fundo tropical desfocado, os logos originais, a data, o local e o aviso de ingressos em breve. A seção branca Vibe do Verão começa logo abaixo, com uma borda superior e sem fade.
+```powershell
+npm install
+npm run dev
+```
 
-A antiga parte inferior foi substituída pela nova composição fornecida. Os arquivos anteriores continuam em `dist/assets` para possível uso futuro.
+Abra http://localhost:3001. Reinicie o servidor após alterar o `.env.local`. Abrir somente o HTML ou usar `npx serve dist` não executa o checkout.
 
-## Arquivos
+## Publicar
 
-- `dist/index.html`: primeira dobra e seção Vibe do Verão.
-- `dist/style.css`: layout, fundo desfocado e seção branca.
-- `dist/assets/fundo.png`: fundo original.
-- `dist/assets/hawaii-edition.png`: título original.
-- `dist/assets/zanoween-logo.png`: logo original.
-- `dist/assets/assets tropicar.png`: arte tropical à esquerda.
-- `dist/assets/A Festa_ Vibe do Verão.png`: título escuro da direita, preservado com transparência.
+Importe na Vercel a pasta que contém este README, `api/` e `vercel.json`:
 
-Abra `dist/index.html` no navegador ou execute `npx --yes serve dist -l 3000` e acesse http://localhost:3000.
+- Framework Preset: **Other**.
+- Build Command: vazio.
+- Output Directory: **dist**.
+- Configure as variáveis do `.env.example` em Settings > Environment Variables, usando os valores reais guardados no `.env.local`. Não envie o `.env.local` ao Git.
 
-## Seção Vibe do Verão
+`CHECKOUT_ENABLED=false` mantém a página publicada com as vendas fechadas. Depois de configurar o remetente de domínio verificado, conferir as credenciais e validar o webhook no domínio publicado, altere para `true` e faça novo deploy.
 
-As duas imagens originais ficam lado a lado no desktop e empilhadas no celular. A arte da direita tem letras escuras e aparece diretamente sobre o branco. A frase de apoio fica ao lado do título; os quatro benefícios aparecem em uma linha abaixo, seguidos do botão laranja para o grupo de WhatsApp. A composição inclui uma flor suave e linhas laranja decorativas, seguindo a referência.
+Leia [CHECKOUT.md](CHECKOUT.md) para a configuração completa e [RESEND.md](RESEND.md) para o e-mail de confirmação. `.vercelignore` impede o upload de arquivos de ambiente, ferramentas de verificação e pastas locais pela CLI.
 
-O layout e o botão estão nas classes `.vibe-layout`, `.vibe-intro`, `.vibe-benefits` e `.vibe-whatsapp`. A borda superior é definida em `.vibe-section`.
+## Ingressos e estoque
 
-Horário e link de ingressos ainda não foram fornecidos. O endereço completo continua reservado para depois da compra.
+| Lote | Mulher | Homem | Estoque compartilhado |
+| --- | --- | --- | --- |
+| 1º | R$ 45 | R$ 50 | 30 |
+| 2º | R$ 50 | R$ 55 | 30 |
+| 3º | R$ 55 | R$ 60 | 20 |
 
-## Edição anterior
+Somente os produtos do primeiro lote estão habilitados no Supabase. O formulário coleta nome completo, gênero e e-mail, com WhatsApp opcional e confirmação de conferência do RG. Não há CPF ou número de RG. O servidor fixa o preço pelo banco e reserva uma vaga; o ingresso só é emitido depois de confirmar a order no Mercado Pago.
 
-A seção `.recap-section` apresenta o texto editorial à esquerda e a imagem `dist/assets/Moldura Tropical Vertical em Tons Vibrantes.png` à direita. O espaço da mídia usa a proporção vertical 9:16 na abertura da moldura, mantendo flores e folhas por cima. No celular, o texto aparece antes da moldura centralizada.
+A tela acompanha automaticamente o Pix e o envio do e-mail, com loading e confirmação. O código do ingresso também aparece no site. Uma referência privada é mantida no sessionStorage da mesma aba para retomar a compra após atualizar a página; os dados do formulário não são gravados ali.
 
-O vídeo da edição anterior está incorporado pelo Vimeo em `.recap-media`, sem controles, no mudo e em loop. O script `dist/recap-video.js` usa o SDK do Vimeo e IntersectionObserver para reproduzir quando o vídeo aparece na tela e pausar quando sai ou a aba fica oculta. A reprodução automática depende das permissões do navegador; ocultar a interface também depende das opções disponíveis na conta Vimeo. O parâmetro `h=49a77ddf5e` preserva o acesso ao vídeo não listado e deve permanecer no endereço do player. O arquivo de vídeo fica hospedado no Vimeo e não entra no deploy do site.
+A equipe usa `/entrada.html`, protegida por código privado, para consultar o ingresso, conferir o RG e confirmar a entrada uma única vez.
 
-## Publicar na Vercel
+## Verificações
 
-A última seção, `#ingressos`, apresenta três lotes em cartões inspirados em bilhetes, com o primeiro em destaque e os valores “A divulgar”. As vendas permanecem “Em breve” até a confirmação dos preços e do link da bilheteria. O botão superior “Ver ingressos” leva a essa seção. O link de novidades abre o grupo oficial de WhatsApp.
+```powershell
+npm test
+npm run supabase:check
+npm run checkout:check
+```
 
-Importe o repositório na Vercel com a pasta `zanoween` como raiz (a pasta que contém este README e `vercel.json`). Use o preset Other, sem comando de build e com saída `dist`. O arquivo `vercel.json` já define a pasta de saída.
+`npm test` executa verificações automatizadas isoladas de banco, interfaces e integrações com provedores simulados; não acessa a conta real nem cria cobranças. Os comandos `:check` consultam os serviços e mostram pendências sem alterar registros. Essa suíte de desenvolvimento é preservada e não faz parte da interface publicada.
 
-Para vídeo no próprio projeto, coloque o MP4 em `dist/assets/` e substitua o placeholder por `<video controls playsinline preload="metadata" src="assets/edicao-anterior.mp4"></video>`. O arquivo será incluído no deploy e a reprodução consumirá transferência de dados da hospedagem.
+As páginas e APIs de simulação de Pix/e-mail foram removidas. Os registros antigos continuam preservados no banco e são excluídos da venda, emissão de ingressos e controle de entrada de produção.
 
-Como alternativa, hospede o vídeo no Vimeo e substitua o placeholder pelo iframe de incorporação fornecido pela plataforma. O CSS já dimensiona o player na abertura vertical. Nesse caso, o MP4 não precisa entrar no repositório nem no deploy.
+## Página e mídia
+
+`dist/index.html` e `dist/style.css` contêm a página responsiva e o checkout. O vídeo da edição anterior fica no Vimeo, dentro da moldura vertical 9:16, com áudio mudo, loop e reprodução conforme a visibilidade. Preserve o parâmetro `h` do vídeo não listado. O banner do e-mail é incorporado como imagem inline, sem depender de URL externa.
+
+O horário e o endereço completo ainda não foram fornecidos. A organização deve informar o endereço aos compradores antes do evento.

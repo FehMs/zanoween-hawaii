@@ -72,6 +72,8 @@ main::after {
 
 .collab { font-size: 23px; font-weight: 400; opacity: .6; }
 
+.kawaii-logo { display: block; width: 70px; height: auto; flex-shrink: 0; }
+
 .kawaii {
   display: flex;
   align-items: center;
@@ -265,11 +267,19 @@ h1 { margin: 0; line-height: 0; }
 .ticket-card h3 { margin: 0 0 25px; font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
 .ticket-card-featured h3 { color: #d94300; }
 .ticket-price { margin: 0; font-size: clamp(25px, 3vw, 36px); line-height: 1.2; font-weight: 600; letter-spacing: -.05em; }
+.ticket-prices { display: grid; gap: 13px; }
+.ticket-prices p { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0; }
+.ticket-prices span { color: #686970; font-size: 12px; }
+.ticket-prices strong { font-size: clamp(21px, 2.3vw, 28px); font-weight: 600; letter-spacing: -.05em; white-space: nowrap; }
 .ticket-detail { max-width: 210px; margin: 13px auto 0; color: #686970; font-size: 11px; line-height: 1.7; }
 .ticket-perforation { margin: 28px 0 22px; border-top: 1px dashed #dcd8d4; }
 .ticket-action { display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: 48px; margin-top: auto; padding: 12px; border: 1px solid #d5d5d9; border-radius: 13px; background: transparent; color: #686970; font: 600 12px 'Montserrat', sans-serif; }
 .ticket-action:disabled { opacity: 1; cursor: default; }
 .ticket-action-primary { border-color: #e84805; background: #e84805; color: white; }
+.ticket-action-primary:not(:disabled) { cursor: pointer; }
+.ticket-action-primary:not(:disabled):hover { background: #cc3e00; }
+.ticket-action:focus-visible { outline: 2px solid #d94300; outline-offset: 4px; }
+.tickets-preview-note { margin: 22px 0 0; color: #686970; font-size: 11px; line-height: 1.7; text-align: center; }
 .ticket-action svg { flex-shrink: 0; width: 23px; height: 23px; }
 .tickets-included { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 32px 0 0; padding: 24px 16px; border-radius: 20px; background: #f7f7f7; list-style: none; }
 .tickets-included li { display: flex; align-items: center; justify-content: center; gap: 13px; padding: 0 16px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
@@ -282,6 +292,58 @@ h1 { margin: 0; line-height: 0; }
 .tickets-notify a:focus-visible { outline: 2px solid var(--orange); outline-offset: 5px; }
 .tickets-signoff { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin: 0; padding-top: 24px; border-top: 1px solid #eeece9; color: #686970; font-size: 9px; line-height: 1.7; letter-spacing: .06em; text-align: center; }
 .tickets-signoff span { color: var(--orange); font-size: 20px; }
+
+.checkout-dialog { position: fixed; width: min(540px, calc(100% - 28px)); max-height: calc(100svh - 32px); padding: 36px; overflow-y: auto; border: 1px solid #efe5dd; border-radius: 24px; background: #fffdfa; color: #10131b; color-scheme: light; font-family: 'Montserrat', sans-serif; box-shadow: 0 24px 90px #0005; }
+.checkout-dialog::backdrop { background: #100d09b8; backdrop-filter: blur(5px); }
+body:has(.checkout-dialog[open]) { overflow: hidden; }
+.checkout-close { position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #f1ece7; color: #514236; font-size: 25px; cursor: pointer; }
+.checkout-dialog > .tickets-eyebrow { margin-top: 9px; padding-right: 20px; font-size: 10px; letter-spacing: .15em; }
+.checkout-dialog h2 { margin: 0; font-size: 29px; font-weight: 600; letter-spacing: -.05em; }
+.checkout-preview { margin: 14px 0 24px; color: #686970; font-size: 12px; line-height: 1.7; }
+.checkout-gender { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 22px; padding: 0; border: 0; }
+.checkout-gender legend { margin-bottom: 11px; font-size: 12px; font-weight: 600; }
+.checkout-gender label { position: relative; cursor: pointer; }
+.checkout-gender input { position: absolute; top: 17px; right: 13px; margin: 0; accent-color: #d94300; }
+.checkout-gender label > span { display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid #dedbd7; border-radius: 13px; background: #fff; font-size: 12px; }
+.checkout-gender strong { font-size: 20px; font-weight: 600; }
+.checkout-gender input:checked + span { border-color: #e84805; background: #fff1e6; box-shadow: 0 0 0 1px #e84805; }
+.checkout-gender input:focus-visible + span { outline: 2px solid #d94300; outline-offset: 4px; }
+.checkout-field { display: block; margin-bottom: 18px; font-size: 12px; font-weight: 600; }
+.checkout-field input { display: block; width: 100%; min-width: 0; height: 48px; margin-top: 9px; padding: 12px 14px; border: 1px solid #dedbd7; border-radius: 10px; background: #fff; color: #10131b; font: 400 16px 'Montserrat', sans-serif; }
+.checkout-field input::placeholder { color: #85817d; font-size: 13px; }
+.checkout-field input:focus-visible, .checkout-close:focus-visible, .checkout-ack input:focus-visible { outline: 2px solid #d94300; outline-offset: 3px; }
+.checkout-optional { color: #686970; font-weight: 400; }
+.checkout-submit:disabled { opacity: .65; cursor: wait; }
+.checkout-entry-notice { margin: 24px 0 14px; padding: 17px; border: 1px solid #f0d6bd; border-radius: 12px; background: #fff1e5; color: #71401f; font-size: 12px; line-height: 1.7; }
+.checkout-entry-notice p { margin: 6px 0 0; font-size: 11px; }
+.checkout-ack { display: flex; align-items: flex-start; gap: 10px; color: #59534e; font-size: 11px; line-height: 1.7; cursor: pointer; }
+.checkout-ack input { flex-shrink: 0; width: 17px; height: 17px; margin: 2px 0 0; accent-color: #d94300; }
+.checkout-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 24px 0 18px; padding-top: 20px; border-top: 1px dashed #dcd8d4; }
+.checkout-summary > span { display: flex; flex-direction: column; gap: 6px; color: #686970; font-size: 11px; }
+.checkout-summary > span strong { color: #10131b; font-size: 12px; font-weight: 500; }
+.checkout-summary > strong { font-size: 25px; font-weight: 600; white-space: nowrap; letter-spacing: -.04em; }
+.checkout-submit { min-height: 50px; }
+.checkout-result { margin: 18px 0 0; padding: 16px; border: 1px solid #f0d6bd; border-radius: 12px; background: #fff1e5; color: #71401f; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.checkout-footnote { margin: 14px 0 0; color: #686970; font-size: 10px; line-height: 1.7; text-align: center; }
+.checkout-payment { padding-top: 12px; }
+.checkout-payment > p { font-size: 14px; line-height: 1.7; }
+.checkout-payment > p:empty { display: none; }
+.checkout-status-art { display: grid; place-items: center; width: 64px; height: 64px; margin: 5px auto 24px; border-radius: 50%; background: #fff0e4; color: #e84805; }
+.checkout-spinner { width: 30px; height: 30px; border: 2px solid #f5ccb2; border-top-color: #e84805; border-right-color: #e84805; border-radius: 50%; animation: checkout-spin .85s linear infinite; }
+.checkout-status-art svg { width: 40px; height: 40px; }
+.checkout-spinner[hidden], .checkout-status-art svg[hidden] { display: none; }
+#ticket-email-status { padding: 16px; border-radius: 12px; background: #fff1e6; color: #71401f; font-size: 12px; line-height: 1.7; }
+@keyframes checkout-spin { to { transform: rotate(360deg); } }
+.checkout-payment .ticket-action { margin-top: 14px; cursor: pointer; }
+.pix-image { display: block; max-width: 100%; height: auto; margin: 20px auto; background: white; }
+.pix-image[hidden] { display: none; }
+.checkout-field textarea { display: block; width: 100%; margin: 10px 0; padding: 12px; resize: vertical; border: 1px solid #dedbd7; border-radius: 10px; background: #fff; color: #302318; font-size: 14px; overflow-wrap: anywhere; }
+.paid-ticket-code { display: block; padding: 18px; border: 1px dashed #e84805; border-radius: 12px; font-size: 18px; overflow-wrap: anywhere; }
+
+@media (max-width: 600px) {
+  .checkout-dialog { padding: 30px 22px 24px; border-radius: 18px; }
+  .ticket-prices strong { font-size: 28px; }
+}
 
 @media (max-width: 800px) {
   .tickets-section { padding: 65px 20px 24px; }
@@ -305,6 +367,7 @@ h1 { margin: 0; line-height: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .checkout-spinner { animation: none; }
 }
 
 @media (max-width: 800px) {
@@ -326,6 +389,7 @@ h1 { margin: 0; line-height: 0; }
   main::before { background-position: 60% center; }
   .brands { gap: 16px; }
   .zanoween { width: 130px; }
+  .kawaii-logo { width: 56px; }
   .kawaii { font-size: 25px; }
   .kawaii span { font-size: 32px; }
   .headline { padding: 55px 0; }

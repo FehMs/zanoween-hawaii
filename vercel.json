@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "functions": {
+    "api/*.js": {
+      "includeFiles": "server/assets/**",
+      "maxDuration": 60
+    }
+  },
+  "crons": [{ "path": "/api/payment-jobs", "schedule": "0 12 * * *" }]
 }
