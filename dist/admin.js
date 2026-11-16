@@ -28,6 +28,7 @@
     $('total-paid').textContent=snapshot.lots.reduce((n,l)=>n+Number(l.paid),0);$('total-pending').textContent=snapshot.lots.reduce((n,l)=>n+Number(l.pending),0);$('total-revenue').textContent=money.format(snapshot.lots.reduce((n,l)=>n+Number(l.revenue),0)/100);
     $('checkout-warning').hidden=snapshot.checkoutReady;renderLots(snapshot.lots);
     renderPartners(snapshot.partners||[]);
+    window.zanoweenGallery?.render(snapshot.content.gallery||[]);
     if(fillContent)for(const [key,value]of Object.entries(snapshot.content))if($('content-form').elements[key])$('content-form').elements[key].value=value;
   }
   let partners=[];
@@ -54,5 +55,6 @@
   $('logout').addEventListener('click',()=>action($('logout'),async()=>{await api({action:'logout'});showLogin();notice('Sessão encerrada.');}));
   $('refresh').addEventListener('click',()=>action($('refresh'),async()=>{await load(false);notice('Resumo atualizado.');}));
   $('content-form').addEventListener('submit',event=>{event.preventDefault();action(event.submitter,async()=>{const content=Object.fromEntries(new FormData($('content-form')));await api({action:'saveContent',content});notice('Conteúdo salvo. Recarregue o site para ver as alterações.');});});
+  window.zanoweenAdmin={api,action,load,notice};
   load().catch(error=>{if(!$('login-panel').hidden)return;$('loading').textContent='Painel indisponível.';notice(error.message,true);});
 })();

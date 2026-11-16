@@ -5,6 +5,7 @@ module.exports = async (req,res) => {
   if (req.method !== 'GET') { res.setHeader('Allow','GET'); return json(res,405,{error:'Método não permitido.'}); }
   try {
     const rows = await createSupabase().request('site_settings?id=eq.1&select=content');
-    json(res,200,{...defaults,...rows[0]?.content});
+    const content=rows[0]?.content||{};
+    json(res,200,Object.fromEntries(Object.entries(defaults).map(([key,value])=>[key,typeof content[key]==='string'?content[key]:value])));
   } catch { json(res,200,defaults); }
 };

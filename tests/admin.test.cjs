@@ -8,7 +8,7 @@ const {defaults,validateContent}=require('../server/site-content.cjs');
 test('admin auth, session, CSRF, validation and login throttling',async()=>{
   let time=Date.now(),calls=[];
   const env={ADMIN_PASSWORD:'a'.repeat(40),APP_URL:'https://example.com',VERCEL:'1'};
-  const handler=createAdmin({env,now:()=>time,db:{async request(...args){calls.push(args);return {lots:[],content:{}};}}});
+  const handler=createAdmin({env,now:()=>time,db:{async request(...args){calls.push(args);if(args[0].startsWith('site_settings'))return [{content:args[1]?.body?.content||{}}];return {lots:[],content:{}};}}});
   async function call(body,cookie='',extra={}){
     const res={headers:{},setHeader(k,v){this.headers[k]=v;},end(value){this.data=JSON.parse(value);}};
     await handler({method:body?'POST':'GET',headers:{'content-type':'application/json',origin:env.APP_URL,cookie,...extra},body},res);return res;

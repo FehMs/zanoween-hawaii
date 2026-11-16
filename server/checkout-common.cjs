@@ -14,11 +14,11 @@ function settings(env=process.env) {
     env.CHECKOUT_HASH_SECRET?.length>=32 && env.CRON_SECRET?.length>=32 && env.CHECKIN_TOKEN?.length>=32;
   return { ready:Boolean(ready), origin, production };
 }
-function body(req) {
+function body(req,maxBytes=8192) {
   if(!String(req.headers['content-type']||'').toLowerCase().startsWith('application/json')) fail(415,'Formato inválido.');
   let data=req.body;
   if(typeof data==='string') { try{data=JSON.parse(data);}catch{fail(400,'Dados inválidos.');} }
-  if(!data||typeof data!=='object'||Array.isArray(data)||JSON.stringify(data).length>8192) fail(400,'Dados inválidos.');
+  if(!data||typeof data!=='object'||Array.isArray(data)||Buffer.byteLength(JSON.stringify(data))>maxBytes) fail(400,'Dados inválidos.');
   return data;
 }
 function buyer(data) {

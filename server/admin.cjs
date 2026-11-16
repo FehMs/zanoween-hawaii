@@ -3,8 +3,9 @@ const { createHmac, randomBytes } = require('node:crypto');
 const { createSupabase } = require('./supabase.cjs');
 const common = require('./checkout-common.cjs');
 const { defaults, validateContent } = require('./site-content.cjs');
+const {updateSettings,manageGallery,ADMIN_BODY_LIMIT}=require('./gallery.cjs');
 const COOKIE = 'zanoween_admin';
-function createAdmin({ env = process.env, db, now = Date.now } = {}) {
+function createAdmin({ env = process.env, db, storage, now = Date.now } = {}) {
   const attempts = new Map();
   const sign = text => createHmac('sha256', env.ADMIN_PASSWORD).update('admin-session:' + text).digest('hex');
   const database = () => db ||= createSupabase({ env });
@@ -24,7 +25,7 @@ function createAdmin({ env = process.env, db, now = Date.now } = {}) {
       if (req.method === 'POST') {
         common.guardOrigin(req, env);
         if (req.headers['sec-fetch-site'] === 'cross-site') common.fail(403,'Origem não autorizada.');
-        const data = common.body(req);
+        const data = common.body(req,authorized(req)?ADMIN_BODY_LIMIT:8192);
         if (data.action === 'login') {
           const ip = env.VERCEL === '1' ? req.headers['x-vercel-forwarded-for'] || 'unknown' : req.socket?.remoteAddress || 'local';
           for (const [key, entry] of attempts) if (entry.until <= now()) attempts.delete(key);
@@ -41,6 +42,9 @@ function createAdmin({ env = process.env, db, now = Date.now } = {}) {
         }
         if (!authorized(req)) common.fail(401,'Entre para acessar o painel.');
         if (data.action === 'logout') { cookie(res,'',0); return common.json(res,200,{ok:true}); }
+        if (['uploadPhoto','savePhoto','movePhoto'].includes(data.action)) {
+          return common.json(res,200,{ok:true,...await manageGallery(data,{db:database(),env,storage})});
+        }
         if (data.action === 'saveLot') {
           const {lot,capacity,femalePrice,malePrice,enabled} = data;
           if (![1,2,3].includes(lot) || !Number.isInteger(capacity) || capacity < 1 || capacity > 100000 || ![femalePrice,malePrice].every(x => Number.isInteger(x) && x > 0 && x <= 10000000) || typeof enabled !== 'boolean') common.fail(400,'Confira a quantidade e os preços do lote.');
@@ -53,7 +57,7 @@ function createAdmin({ env = process.env, db, now = Date.now } = {}) {
         } else if (data.action === 'saveContent') {
           const content = validateContent(data.content);
           if (!content) common.fail(400,'Confira os textos, a data e o link do WhatsApp.');
-          await database().request('site_settings?id=eq.1',{method:'PATCH',body:{content}});
+          await updateSettings(database(),before=>({...before,...content}));
         } else common.fail(400,'Ação inválida.');
         return common.json(res,200,{ok:true});
       }

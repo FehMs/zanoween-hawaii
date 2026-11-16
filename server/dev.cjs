@@ -5,6 +5,7 @@ const path = require('node:path');
 const fs = require('node:fs/promises');
 const root = path.resolve(__dirname, '../dist');
 const routes = {
+  '/api/gallery': require('../api/gallery.js'),
   '/api/admin': require('../api/admin.js'),
   '/api/site-config': require('../api/site-config.js'),
   '/api/checkout-config': require('../api/checkout-config.js'),
@@ -19,12 +20,15 @@ const server = http.createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (routes[pathname]) {
-      let raw = '';
+      const chunks=[];
+      let size=0;
+      const limit=pathname==='/api/admin'?require('./gallery.cjs').ADMIN_BODY_LIMIT:8192;
       for await (const chunk of req) {
-        raw += chunk;
-        if (Buffer.byteLength(raw) > 8192) { res.writeHead(413); res.end(); return; }
+        size+=chunk.length;
+        if (size > limit) { res.writeHead(413,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Arquivo muito grande. Escolha uma imagem menor.'}));return; }
+        chunks.push(chunk);
       }
-      req.body = raw;
+      req.body = Buffer.concat(chunks).toString('utf8');
       return await routes[pathname](req, res);
     }
     if (pathname.startsWith('/api/')) { res.writeHead(404); res.end(); return; }

@@ -20,6 +20,16 @@ Na seção **Parceiros e indicações**, cadastre o nome do divulgador e um cód
 
 O código identifica a indicação e mantém o preço do ingresso. O painel exibe pedidos pagos, pendentes e receita confirmada por parceiro; testes, cancelamentos, expirações e estornos não entram na receita. É possível editar o nome e pausar/reativar o código. O código de uma compra já criada permanece vinculado ao pedido mesmo após a pausa do parceiro; repetir a mesma compra não troca a indicação. Pedidos anteriores continuam sem parceiro.
 
+## Galeria de fotos
+
+Em `/admin#fotos`, envie uma foto JPG, PNG ou WebP de até 20 MB e preencha título, legenda opcional e descrição acessível. O navegador reduz a maior dimensão para 2000 px e otimiza o arquivo para até 2 MB antes do envio. É possível preencher o story ou mostrar a foto inteira, publicar/ocultar cada foto e alterar a sequência usando as setas. A primeira foto publicada é a capa. O álbum aceita até 60 fotos.
+
+A seção pública em `/#galeria` tem setas, miniaturas, navegação por teclado, gesto lateral no celular e visualização ampliada. A reprodução automática é opcional e pausa quando a galeria sai da tela, a aba fica oculta ou a foto é ampliada. Sem fotos, a seção exibe uma capa ilustrada e mantém o acesso ao aftermovie.
+
+As imagens usam o bucket público `event-gallery` no Supabase Storage, criado automaticamente pelo servidor no primeiro upload (ou na preparação inicial). Os dados do álbum ficam em `site_settings.content.gallery`, sem migração adicional. Somente o admin pode enviar ou editar. A API pública lista apenas as fotos publicadas; ocultar retira a foto da galeria, mas não revoga seu endereço público no Storage. O envio usa os limites documentados no [Supabase Storage](https://supabase.com/docs/guides/storage/buckets/creating-buckets).
+
+As gravações de conteúdo e galeria usam a revisão `_revision` para preservar alterações simultâneas. Salvar os textos não apaga as fotos. Uma falha ao salvar o cadastro tenta remover apenas o arquivo recém-enviado, para evitar arquivos sem vínculo.
+
 ## Acesso
 
 A senha é verificada no servidor; a sessão assinada dura oito horas e usa cookie HttpOnly, SameSite=Strict e Secure em produção. Sair remove o cookie deste navegador. Trocar `ADMIN_PASSWORD` e republicar invalida as sessões anteriores. O login limita cinco falhas por origem em cada instância do servidor durante quinze minutos; em produção com múltiplas instâncias, use também o rate limit/WAF da hospedagem para um limite global.
