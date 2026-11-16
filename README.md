@@ -1,4 +1,4 @@
-# Zanoween — Hawaii Edition
+# Zanoween - Hawaii Edition
 
 Frontend estático em `dist/`, sem build. APIs Node 22 ou superior em `api/` e `server/`, integradas ao Supabase, Mercado Pago Orders e Resend. O código de produção não usa dependências externas de runtime; PGlite é usado somente na suíte automatizada de verificação.
 

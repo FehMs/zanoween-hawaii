@@ -28,7 +28,7 @@
     const payload=await response.json();
     if(!response.ok){const error=new Error(payload.error||'Não foi possível concluir.');error.status=response.status;throw error;}return payload;
   }
-  function summary(){const gender=form.elements.gender.value;byId('checkout-total').textContent=prices[gender]?money.format(prices[gender]):'—';byId('checkout-category').textContent=gender==='mulher'?'Mulher':gender==='homem'?'Homem':'Selecione o gênero';result.hidden=true;}
+  function summary(){const gender=form.elements.gender.value;byId('checkout-total').textContent=prices[gender]?money.format(prices[gender]):'-';byId('checkout-category').textContent=gender==='mulher'?'Mulher':gender==='homem'?'Homem':'Selecione o gênero';result.hidden=true;}
   function showForm(){form.hidden=false;payment.hidden=true;heading('Seu lugar na festa.',config.checkoutEnabled?'Preencha os dados do participante para gerar o Pix.':'As vendas ainda não estão abertas. Entre no grupo para acompanhar as novidades.');summary();}
   const ready=fetch('/api/checkout-config',{cache:'no-store',signal:AbortSignal.timeout(15000)})
     .then(r=>r.ok?r.json():{}).then(value=>{
