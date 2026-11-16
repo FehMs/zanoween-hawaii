@@ -41,7 +41,7 @@ function paymentService({db,mp,env=process.env,fetchImpl=globalThis.fetch}) {
   return {
     lookup,sync,view,reconcile,
     async create(participant,ipHash) {
-      let local=await db.request('rpc/reserve_checkout',{method:'POST',body:{p_id:participant.requestId,p_access_hash:participant.accessHash,p_name:participant.fullName,p_email:participant.email,p_phone:participant.phone,p_gender:participant.gender,p_ip_hash:ipHash,p_is_test:false}});
+      let local=await db.request('rpc/reserve_checkout',{method:'POST',body:{p_id:participant.requestId,p_access_hash:participant.accessHash,p_name:participant.fullName,p_email:participant.email,p_phone:participant.phone,p_gender:participant.gender,p_ip_hash:ipHash,p_is_test:false,...(participant.partnerCode ? {p_partner_code:participant.partnerCode} : {}),...(participant.partnerCode ? {p_partner_code:participant.partnerCode} : {}),...(participant.lot === undefined ? {} : {p_lot:participant.lot})}});
       if(local.status!=='pending')return view(local);
       local=await reconcile(local);
       return view(local);

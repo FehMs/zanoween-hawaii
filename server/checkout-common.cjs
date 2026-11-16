@@ -25,9 +25,13 @@ function buyer(data) {
   const fullName=typeof data.fullName==='string'?data.fullName.trim():'';
   const email=typeof data.email==='string'?data.email.trim().toLowerCase():'';
   const phone=typeof data.phone==='string'?data.phone.trim():'';
+  if(data.partnerCode !== undefined && typeof data.partnerCode !== 'string') fail(400,'Código de parceiro inválido.');
+  const partnerCode=(data.partnerCode||'').trim().toUpperCase();
+  if(partnerCode && !/^[A-Z0-9_-]{3,32}$/.test(partnerCode)) fail(400,'O código de parceiro deve ter de 3 a 32 letras, números, hífen ou sublinhado.');
   if(fullName.length<3||fullName.length>120||/[\x00-\x1f\x7f]/.test(fullName)||email.length>160||! /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)||phone.length>25||!['mulher','homem'].includes(data.gender)||data.acknowledgement!==true) fail(400,'Confira os dados do participante e a ciência sobre o RG.');
   if(!uuid.test(data.requestId||'')||typeof data.accessToken!=='string'||!/^[a-f0-9]{64}$/.test(data.accessToken)) fail(400,'Identificação da compra inválida. Atualize a página.');
-  return {fullName,email,phone:phone||null,gender:data.gender,requestId:data.requestId,accessHash:hash(data.accessToken)};
+  if(data.lot !== undefined && ![1,2,3].includes(data.lot)) fail(400,'Lote invalido.');
+  return {...(data.lot === undefined ? {} : {lot:data.lot}),...(partnerCode ? {partnerCode} : {}),fullName,email,phone:phone||null,gender:data.gender,requestId:data.requestId,accessHash:hash(data.accessToken)};
 }
 function guardOrigin(req,env=process.env) {
   const origin=req.headers.origin;
@@ -45,7 +49,7 @@ function cents(value) {
 }
 function json(res,status,data) {res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');res.end(JSON.stringify(data));}
 function handleError(res,error) {
-  const map={sold_out:[409,'Ingressos indisponíveis nesta categoria.'],sales_closed:[409,'As vendas ainda não estão abertas.'],capacity_missing:[503,'O lote ainda não está disponível.'],too_many_requests:[429,'Muitas tentativas. Aguarde 15 minutos.'],request_conflict:[409,'Esta tentativa já foi usada com outros dados. Inicie uma nova compra.'],ticket_already_used:[409,'Este ingresso já foi utilizado.'],invalid_ticket:[404,'Ingresso inválido ou cancelado.']};
+  const map={invalid_partner_code:[400,'Codigo de parceiro inexistente ou inativo. Confira ou deixe o campo vazio.'],invalid_partner_code:[400,'Codigo de parceiro inexistente ou pausado. Confira o codigo ou deixe o campo vazio.'],sold_out:[409,'Ingressos indisponíveis nesta categoria.'],sales_closed:[409,'As vendas ainda não estão abertas.'],capacity_missing:[503,'O lote ainda não está disponível.'],too_many_requests:[429,'Muitas tentativas. Aguarde 15 minutos.'],request_conflict:[409,'Esta tentativa já foi usada com outros dados. Inicie uma nova compra.'],ticket_already_used:[409,'Este ingresso já foi utilizado.'],invalid_ticket:[404,'Ingresso inválido ou cancelado.']};
   const [status,message]=map[error.reason]||[error.httpStatus||503,error.httpStatus?error.message:'Não foi possível concluir agora. Tente novamente com a mesma compra.'];
   json(res,status,{error:message});
 }

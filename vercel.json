@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
+  "rewrites": [{"source":"/admin","destination":"/admin.html"},{"source":"/admin/","destination":"/admin.html"}],
   "outputDirectory": "dist",
   "functions": {
     "api/*.js": {

@@ -5,7 +5,16 @@
   const submit=form.querySelector('[type="submit"]'),close=dialog.querySelector('.checkout-close');
   const result=byId('checkout-result'),payment=byId('checkout-payment');
   const prices={mulher:45,homem:50},money=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
-  let config={},busy=false,timer,session;
+  let config={},busy=false,timer,session,selectedLot=1;
+  function selectLot(lot){
+    selectedLot=lot;
+    const available=config.lots?.find(l=>l.lot===lot)?.products.filter(p=>p.enabled)||config.products||[];
+    for(const product of available)prices[product.gender]=product.priceCents/100;
+    for(const radio of form.elements.gender){radio.disabled=!available.some(p=>p.gender===radio.value);if(radio.disabled)radio.checked=false;radio.nextElementSibling.querySelector('strong').textContent=money.format(prices[radio.value]);}
+    const label=byId('checkout-lot-label'),summaryLabel=byId('checkout-lot-summary');
+    if(label)label.textContent=`${lot}º lote · Hawaii Edition`;
+    if(summaryLabel)summaryLabel.textContent=`1 ingresso · ${lot}º lote`;
+  }
   try{session=JSON.parse(sessionStorage.getItem('zanoween-checkout')||'null');}catch{}
   if(session&&(!/^[a-f0-9-]{36}$/i.test(session.id||'')||!/^[a-f0-9]{64}$/.test(session.accessToken||'')))session=null;
   const saveSession=value=>{session=value;try{if(value)sessionStorage.setItem('zanoween-checkout',JSON.stringify(value));else sessionStorage.removeItem('zanoween-checkout');}catch{}};
@@ -24,12 +33,22 @@
   const ready=fetch('/api/checkout-config',{cache:'no-store',signal:AbortSignal.timeout(15000)})
     .then(r=>r.ok?r.json():{}).then(value=>{
       config=value;
+      if(config.lots?.length){
+        for(const card of document.querySelectorAll('[data-lot]')){
+          const lot=Number(card.dataset.lot),data=config.lots.find(l=>l.lot===lot),enabled=data?.products.some(p=>p.enabled);
+          const button=card.querySelector('[data-open-checkout]');button.disabled=!enabled;button.textContent=enabled?'Selecionar ingresso':'Indisponível';
+          const badge=card.querySelector('.ticket-badge');if(badge)badge.textContent=enabled?'Disponível':'Vendas pausadas';
+          for(const row of card.querySelectorAll('.ticket-prices p')){const gender=row.querySelector('span').textContent==='Mulher'?'mulher':'homem',product=data?.products.find(p=>p.gender===gender);if(product)row.querySelector('strong').textContent=money.format(product.priceCents/100);}
+        }
+        selectedLot=config.lots.find(l=>l.products.some(p=>p.enabled))?.lot||1;
+      }
       if(config.checkoutEnabled){
         for(const product of config.products||[])prices[product.gender]=product.priceCents/100;
         for(const radio of form.elements.gender){radio.disabled=!(config.products||[]).some(p=>p.gender===radio.value);radio.nextElementSibling.querySelector('strong').textContent=money.format(prices[radio.value]);}
-        byId('tickets-availability').textContent='1º lote disponível. Pagamento via Pix.';
+        byId('tickets-availability').textContent='Ingressos disponíveis. Pagamento via Pix.';
         document.querySelector('.ticket-badge').textContent='Lote atual';
       }
+      selectLot(selectedLot);
       showForm();
     }).catch(()=>{heading('Seu lugar na festa.','Não foi possível carregar a disponibilidade. Atualize a página para tentar novamente.');})
     .finally(()=>setBusy(false));
@@ -58,7 +77,7 @@
       else{form.hidden=true;payment.hidden=false;byId('payment-message').textContent=error.message;byId('refresh-payment').hidden=false;schedule();}
     }finally{setBusy(false);byId('refresh-payment').disabled=false;}
   }
-  document.querySelectorAll('[data-open-checkout]').forEach(button=>button.addEventListener('click',async()=>{dialog.showModal();await ready;if(session){loading();await refresh();}else showForm();}));
+  document.querySelectorAll('[data-open-checkout]').forEach(button=>button.addEventListener('click',async()=>{dialog.showModal();await ready;selectLot(Number(button.closest?.('[data-lot]')?.dataset.lot)||selectedLot);if(session){loading();await refresh();}else showForm();}));
   close.addEventListener('click',()=>{if(!close.disabled)dialog.close();});
   dialog.addEventListener('cancel',event=>{if(close.disabled)event.preventDefault();});
   dialog.addEventListener('close',()=>{clearTimeout(timer);form.reset();summary();});
@@ -70,7 +89,7 @@
   form.addEventListener('submit',async event=>{
     event.preventDefault();await ready;if(busy||!config.checkoutEnabled||!form.reportValidity())return;
     if(session){loading();await refresh();return;}
-    const data={fullName:form.elements.fullName.value.trim(),email:form.elements.email.value.trim(),phone:form.elements.phone.value.trim(),gender:form.elements.gender.value,acknowledgement:form.elements.acknowledgement.checked};
+    const data={fullName:form.elements.fullName.value.trim(),email:form.elements.email.value.trim(),phone:form.elements.phone.value.trim(),gender:form.elements.gender.value,acknowledgement:form.elements.acknowledgement.checked,lot:selectedLot,partnerCode:form.elements.partnerCode?.value.trim().toUpperCase()||''};
     if(!Object.hasOwn(prices,data.gender))return;setBusy(true,true);loading();
     const controls=Array.from(form.elements).filter(control=>!control.disabled);controls.forEach(control=>{control.disabled=true;});
     const pointer={id:crypto.randomUUID(),accessToken:(crypto.randomUUID()+crypto.randomUUID()).replaceAll('-','')};saveSession(pointer);
@@ -78,6 +97,6 @@
     catch(error){
       if(error.status&&error.status<500){saveSession(null);showForm();message(error.message);}
       else{byId('payment-message').textContent=error.message;byId('refresh-payment').hidden=false;schedule();}
-    }finally{controls.forEach(control=>{control.disabled=false;});setBusy(false);}
+    }finally{controls.forEach(control=>{control.disabled=false;});selectLot(selectedLot);setBusy(false);}
   });
 })();

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#050506">
-  <meta name="description" content="Zanoween × Kawaii. Hawaii Edition, 12.12.26, no Espaço Limão.">
+  <meta name="description" content="Zanoween. Hawaii Edition, 12.12.26, no Espaço Limão.">
   <title>Zanoween — Hawaii Edition</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,10 +16,8 @@
 <body>
   <main>
   <section class="poster" aria-label="Zanoween Hawaii Edition">
-    <div class="brands" aria-label="Zanoween em parceria com Kawaii">
+    <div class="brands" aria-label="Zanoween">
       <img class="zanoween" src="assets/zanoween-hawaii.png" alt="Zanoween 2K26" width="2172" height="724">
-      <span class="collab" aria-hidden="true">×</span>
-      <img class="kawaii-logo" src="assets/logo-kawaii.png" alt="Kawaii Vodka" width="655" height="959">
     </div>
 
     <div class="headline">
@@ -86,7 +84,7 @@
       </header>
 
       <div class="tickets-grid">
-        <article class="ticket-card ticket-card-featured" aria-labelledby="lot-one">
+        <article data-lot="1" class="ticket-card ticket-card-featured" aria-labelledby="lot-one">
           <span class="ticket-badge">Abertura em breve</span>
           <h3 id="lot-one">1º lote</h3>
           <div class="ticket-prices"><p><span>Mulher</span><strong>R$ 45,00</strong></p><p><span>Homem</span><strong>R$ 50,00</strong></p></div>
@@ -98,20 +96,20 @@
           </button>
         </article>
 
-        <article class="ticket-card" aria-labelledby="lot-two">
+        <article data-lot="2" class="ticket-card" aria-labelledby="lot-two">
           <h3 id="lot-two">2º lote</h3>
           <div class="ticket-prices"><p><span>Mulher</span><strong>R$ 50,00</strong></p><p><span>Homem</span><strong>R$ 55,00</strong></p></div>
           <p class="ticket-detail">Mais uma chance de viver essa edição.</p>
           <div class="ticket-perforation" aria-hidden="true"></div>
-          <button class="ticket-action" type="button" disabled>Em breve</button>
+          <button class="ticket-action" type="button" data-open-checkout aria-haspopup="dialog" aria-controls="ticket-checkout" disabled>Em breve</button>
         </article>
 
-        <article class="ticket-card" aria-labelledby="lot-three">
+        <article data-lot="3" class="ticket-card" aria-labelledby="lot-three">
           <h3 id="lot-three">3º lote</h3>
           <div class="ticket-prices"><p><span>Mulher</span><strong>R$ 55,00</strong></p><p><span>Homem</span><strong>R$ 60,00</strong></p></div>
           <p class="ticket-detail">A última chamada para o Hawaii.</p>
           <div class="ticket-perforation" aria-hidden="true"></div>
-          <button class="ticket-action" type="button" disabled>Em breve</button>
+          <button class="ticket-action" type="button" data-open-checkout aria-haspopup="dialog" aria-controls="ticket-checkout" disabled>Em breve</button>
         </article>
       </div>
 
@@ -133,7 +131,7 @@
   </main>
   <dialog class="checkout-dialog" id="ticket-checkout" aria-labelledby="checkout-title" aria-describedby="checkout-preview">
     <button class="checkout-close" type="button" aria-label="Fechar formulário de ingresso">×</button>
-    <p class="tickets-eyebrow">1º lote · Hawaii Edition</p>
+    <p class="tickets-eyebrow" id="checkout-lot-label">1º lote · Hawaii Edition</p>
     <h2 id="checkout-title">Seu lugar na festa.</h2>
     <p class="checkout-preview" id="checkout-preview">Preencha os dados do participante para pagar com Pix.</p>
     <form id="checkout-form" method="dialog">
@@ -151,9 +149,13 @@
       <label class="checkout-field" for="attendee-phone">WhatsApp <span class="checkout-optional">(opcional)</span>
         <input id="attendee-phone" name="phone" type="tel" autocomplete="tel" placeholder="(11) 99999-9999" maxlength="25">
       </label>
+      <label class="checkout-field" for="partner-code">Código de parceiro <span class="checkout-optional">(opcional)</span>
+        <input id="partner-code" name="partnerCode" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ex.: MARIA10" maxlength="32" pattern="(?:[A-Za-z0-9_]|-){3,32}" aria-describedby="partner-help">
+        <small id="partner-help">Se alguém indicou a festa, informe o código dessa pessoa.</small>
+      </label>
       <div class="checkout-entry-notice" id="entry-notice"><strong>Apresente seu RG na entrada.</strong><p>A entrada só será liberada mediante apresentação do RG para comprovar o nome informado no ingresso. Preencha o nome completo exatamente como consta no documento.</p></div>
       <label class="checkout-ack"><input type="checkbox" name="acknowledgement" required><span>Estou ciente de que preciso apresentar meu RG e de que o nome deve corresponder ao do ingresso.</span></label>
-      <div class="checkout-summary"><span>1 ingresso · 1º lote<strong id="checkout-category">Selecione o gênero</strong></span><strong id="checkout-total" aria-live="polite">—</strong></div>
+      <div class="checkout-summary"><span><span id="checkout-lot-summary">1 ingresso · 1º lote</span><strong id="checkout-category">Selecione o gênero</strong></span><strong id="checkout-total" aria-live="polite">—</strong></div>
       <button class="ticket-action ticket-action-primary checkout-submit" type="submit" disabled>Carregando…</button>
       <noscript><p>Ative o JavaScript para comprar seu ingresso.</p></noscript>
       <p class="checkout-result" id="checkout-result" role="status" hidden></p>
@@ -175,6 +177,7 @@
   </dialog>
   <script src="https://player.vimeo.com/api/player.js" defer></script>
   <script src="recap-video.js" defer></script>
+  <script src="site-content.js" defer></script>
   <script src="tickets.js" defer></script>
 </body>
 </html>

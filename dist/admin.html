@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101813"><title>Admin · Zanoween</title><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/admin.css"><script src="/admin.js" defer></script></head>
+<body><div class="shell">
+  <aside><a class="brand" href="/admin">ZANOWEEN<span>HAWAII EDITION / ADMIN</span></a><nav aria-label="Administração"><a href="#lotes">01 <span>Lotes e ingressos</span></a><a href="#conteudo">02 <span>Conteúdo do site</span></a><a href="#parceiros">03 <span>Parceiros</span></a></nav><a class="site-link" href="/" target="_blank" rel="noopener">Abrir site ↗</a><p class="aside-note">Tudo pronto para<br>o próximo encontro.</p></aside>
+  <main><header><div><p class="eyebrow">BASTIDORES DA FESTA</p><h1>Painel de controle<span>.</span></h1></div><button id="logout" class="secondary" hidden>Sair da conta</button></header>
+    <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
+    <section id="login-panel" class="panel login" hidden><span class="pill">ACESSO RESTRITO</span><h2>Entre nos bastidores.</h2><p>Use a senha da organização para gerenciar o evento.</p><form id="login-form"><label for="password">Senha de administrador</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="256"><button type="submit">Entrar no painel →</button></form><small>A sessão dura até 8 horas.</small></section>
+    <p id="loading" role="status">Carregando painel…</p>
+    <div id="dashboard" hidden>
+      <section class="stats" aria-label="Resumo de vendas"><div><span>Ingressos pagos</span><strong id="total-paid">—</strong></div><div><span>Reservas pendentes</span><strong id="total-pending">—</strong></div><div><span>Receita confirmada</span><strong id="total-revenue">—</strong></div></section>
+      <p id="checkout-warning" class="warning" hidden>O checkout está desativado ou a configuração de pagamentos está incompleta no servidor. Os lotes podem ser editados, mas as compras só serão liberadas após a configuração.</p>
+      <section id="lotes"><div class="section-heading"><div><p class="eyebrow">INGRESSOS</p><h2>Cada lote, no seu tempo.</h2></div><button id="refresh" class="secondary">Atualizar resumo ↻</button></div><p class="help">Libere ou pause os lotes, ajuste os valores e acompanhe as vagas. As compras já iniciadas mantêm o preço original.</p><div id="lot-list" class="lot-grid"></div></section>
+      <section id="parceiros" class="partners-section"><div class="section-heading"><div><p class="eyebrow">QUEM DIVULGA A FESTA</p><h2>Parceiros e indicações.</h2></div></div><p class="help">Cadastre um código para cada divulgador. Acompanhe as compras pagas e pendentes por código.</p>
+        <form id="partner-form" class="panel partner-form"><label>Nome do parceiro<input name="name" minlength="2" maxlength="120" required placeholder="Nome do divulgador"></label><label>Código<input name="code" minlength="3" maxlength="32" pattern="(?:[A-Za-z0-9_]|-){3,32}" autocapitalize="characters" autocomplete="off" spellcheck="false" required placeholder="MARIA10"><small>De 3 a 32 letras, números, hífen ou sublinhado.</small></label><button type="submit">Cadastrar parceiro →</button></form>
+        <div id="partner-list" class="partner-list"></div>
+      </section>
+      <section id="conteudo"><div class="section-heading"><div><p class="eyebrow">O SITE, DO SEU JEITO</p><h2>Informações do evento.</h2></div></div><form id="content-form" class="panel content-grid">
+        <label class="wide">Frase principal<input name="tagline" maxlength="200" required></label><label>Data do evento<input name="eventDate" type="date" required></label><label>Local<input name="venue" maxlength="200" required></label><label class="wide">Aviso do endereço<input name="addressNote" maxlength="200" required></label><label>Título dos ingressos<input name="ticketsTitle" maxlength="200" required></label><label>Descrição dos ingressos<input name="ticketsIntro" maxlength="200" required></label><label class="wide">Link do grupo / WhatsApp<input name="whatsappUrl" type="url" maxlength="500" required><small>Use um link https://chat.whatsapp.com ou https://wa.me.</small></label>
+        <div class="form-footer wide"><small>As alterações aparecem no site ao recarregar a página. A data e o local do e-mail de compra são configurados separadamente no código.</small><button type="submit">Salvar conteúdo →</button></div>
+      </form></section>
+    </div>
+  </main></div></body></html>

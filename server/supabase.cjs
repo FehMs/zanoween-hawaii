@@ -37,7 +37,7 @@ function createSupabase({ env = process.env, fetchImpl = globalThis.fetch } = {}
         try {
           const failure = await response.json();
           code = failure.code;
-          const allowed = ['invalid_participant','request_conflict','sales_closed','capacity_missing','too_many_requests','sold_out','order_not_found','payment_conflict','invalid_status','invalid_ticket','ticket_already_used'];
+          const allowed = ['invalid_participant','request_conflict','sales_closed','capacity_missing','too_many_requests','sold_out','order_not_found','payment_conflict','invalid_status','invalid_ticket','ticket_already_used','capacity_below_reserved','invalid_partner_code'];
           if (allowed.includes(failure.message)) reason = failure.message;
         } catch {}
         if (['PGRST202','PGRST204','42703'].includes(code) || ((code==='PGRST205'||code==='42P01')&&path.startsWith('ticket_lots'))) {

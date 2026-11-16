@@ -4,6 +4,8 @@ Frontend estático em `dist/`, sem build. APIs Node 22 ou superior em `api/` e `
 
 ## Localhost
 
+O painel `/admin` permite gerenciar lotes e conteúdo do site. Consulte [ADMIN.md](ADMIN.md) para aplicar a migração do banco e configurar a senha de acesso.
+
 ```powershell
 npm install
 npm run dev
@@ -32,7 +34,7 @@ Leia [CHECKOUT.md](CHECKOUT.md) para a configuração completa e [RESEND.md](RES
 | 2º | R$ 50 | R$ 55 | 30 |
 | 3º | R$ 55 | R$ 60 | 20 |
 
-Somente os produtos do primeiro lote estão habilitados no Supabase. O formulário coleta nome completo, gênero e e-mail, com WhatsApp opcional e confirmação de conferência do RG. Não há CPF ou número de RG. O servidor fixa o preço pelo banco e reserva uma vaga; o ingresso só é emitido depois de confirmar a order no Mercado Pago.
+A liberação dos três lotes é controlada pelo painel `/admin`, conforme o estado salvo no Supabase. O formulário coleta nome completo, gênero e e-mail, com WhatsApp opcional e confirmação de conferência do RG. Não há CPF ou número de RG. O servidor fixa o preço pelo banco e reserva uma vaga; o ingresso só é emitido depois de confirmar a order no Mercado Pago.
 
 A tela acompanha automaticamente o Pix e o envio do e-mail, com loading e confirmação. O código do ingresso também aparece no site. Uma referência privada é mantida no sessionStorage da mesma aba para retomar a compra após atualizar a página; os dados do formulário não são gravados ali.
 

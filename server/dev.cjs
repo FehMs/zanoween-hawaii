@@ -5,6 +5,8 @@ const path = require('node:path');
 const fs = require('node:fs/promises');
 const root = path.resolve(__dirname, '../dist');
 const routes = {
+  '/api/admin': require('../api/admin.js'),
+  '/api/site-config': require('../api/site-config.js'),
   '/api/checkout-config': require('../api/checkout-config.js'),
   '/api/checkout': require('../api/checkout.js'),
   '/api/order-status': require('../api/order-status.js'),
@@ -27,7 +29,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (pathname.startsWith('/api/')) { res.writeHead(404); res.end(); return; }
     if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
-    const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
+    const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : ['/admin','/admin/'].includes(pathname) ? '/admin.html' : pathname));
     if (!file.startsWith(root + path.sep)) { res.writeHead(403); res.end(); return; }
     const content = await fs.readFile(file);
     res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
