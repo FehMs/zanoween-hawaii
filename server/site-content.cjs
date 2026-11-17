@@ -1,6 +1,6 @@
 'use strict';
 const defaults = {
-  tagline: 'O calor vai tomar conta.', eventDate: '2026-12-12', venue: 'Espaço Limão',
+  tagline: 'A noite vai entrar no clima Aloha.', eventDate: '2026-12-12', venue: 'Espaço Limão',
   addressNote: 'Endereço revelado após a compra.',
   ticketsTitle: 'Garanta o seu ingresso', ticketsIntro: 'Seu próximo encontro com a vibe do verão.',
   whatsappUrl: 'https://chat.whatsapp.com/C423ygeW2kRIcbW1St7Xak?mode=wwt'
