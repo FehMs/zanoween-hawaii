@@ -1,0 +1,124 @@
+/* Shared type scale, taken from the tickets section. Load after section styles. */
+:root {
+  --font-site: 'Montserrat', sans-serif;
+  --type-heading: clamp(30px, 4.2vw, 48px);
+  --type-subheading: clamp(21px, 2.3vw, 28px);
+  --type-body: 13px;
+  --type-label: 12px;
+  --type-small: 11px;
+  --type-micro: 9px;
+  --weight-body: 400;
+  --weight-label: 500;
+  --weight-heading: 600;
+  --leading-body: 1.7;
+  --leading-heading: 1.15;
+  --tracking-heading: -.055em;
+}
+
+body {
+  font-family: var(--font-site);
+  font-size: var(--type-body);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+}
+
+button, input, select, textarea { font-family: var(--font-site); }
+
+.tickets-heading h2, .memories-copy h2, .recap-copy h2, .vibe-copy h2 {
+  font: var(--weight-heading) var(--type-heading)/var(--leading-heading) var(--font-site);
+  letter-spacing: var(--tracking-heading);
+  text-transform: none;
+}
+
+.vibe-copy h2:has(> img) { line-height: 0; }
+
+.memories-copy h2 em, .story-empty strong em {
+  font-style: normal;
+  font-weight: inherit;
+}
+
+.tickets-eyebrow, .recap-eyebrow, .memories-kicker {
+  font: var(--weight-heading) var(--type-label)/var(--leading-body) var(--font-site);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+
+.headline p, .event-info, .vibe-intro p, .recap-description,
+.tickets-intro, .memories-description, .checkout-preview,
+.checkout-payment > p, .checkout-entry-notice, .checkout-result,
+#ticket-email-status {
+  font-size: var(--type-body);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+  letter-spacing: normal;
+}
+
+.ticket, .vibe-whatsapp, .memories-cta, .ticket-action, .tickets-notify a {
+  font: var(--weight-heading) var(--type-label)/var(--leading-body) var(--font-site);
+  letter-spacing: normal;
+}
+
+.ticket-card h3, .ticket-prices span, .checkout-field,
+.checkout-gender legend, .checkout-gender label > span,
+.tickets-notify p {
+  font-size: var(--type-label);
+  line-height: var(--leading-body);
+}
+
+.ticket-prices strong, .story-caption h3 {
+  font: var(--weight-heading) var(--type-subheading)/1.2 var(--font-site);
+  letter-spacing: -.05em;
+}
+
+.address-note, .vibe-benefits li > span:last-child, .recap-placeholder,
+.ticket-detail, .tickets-preview-note, .tickets-included li,
+.memories-notes span, .story-caption p, .story-empty p,
+.story-error, .story-retry, .album-controls, .memories-bottom,
+.checkout-ack, .checkout-footnote, .checkout-entry-notice p,
+.checkout-summary > span {
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
+  letter-spacing: normal;
+}
+
+.ticket-badge, .tickets-signoff, .album-stamp,
+.story-brand small, .story-edition, .story-empty-label,
+.recap-placeholder small {
+  font-size: var(--type-micro);
+  line-height: var(--leading-body);
+  letter-spacing: .06em;
+}
+
+.album-handwritten {
+  font: var(--weight-label) var(--type-label)/var(--leading-body) var(--font-site);
+  letter-spacing: normal;
+  transform: none;
+}
+
+.story-brand {
+  font: var(--weight-heading) var(--type-small)/var(--leading-body) var(--font-site);
+  letter-spacing: .06em;
+}
+
+.story-empty strong {
+  font: var(--weight-heading) clamp(25px, 3vw, 36px)/var(--leading-heading) var(--font-site);
+  letter-spacing: var(--tracking-heading);
+}
+
+.checkout-dialog { font-family: var(--font-site); }
+.checkout-dialog h2 {
+  font: var(--weight-heading) var(--type-subheading)/var(--leading-heading) var(--font-site);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Keep form input text at 16px to avoid browser zoom on mobile. */
+.checkout-field input, .checkout-field textarea {
+  font: var(--weight-body) 16px/var(--leading-body) var(--font-site);
+}
+.checkout-field input::placeholder { font-size: var(--type-body); }
+
+@media (max-width: 700px) {
+  .memories-copy h2 br { display: none; }
+  .memories-bottom { flex-wrap: wrap; row-gap: 10px; }
+  .memories-bottom > span:first-child, .memories-bottom > span:last-child { max-width: 42%; }
+}

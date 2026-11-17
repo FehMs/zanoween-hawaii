@@ -172,7 +172,6 @@ h1 { margin: 0; line-height: 0; }
 
 .vibe-benefits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; margin: 18px 0 0; }
 .vibe-benefits li { display: flex; flex-direction: column; align-items: center; gap: 9px; min-width: 0; padding: 0 8px; }
-.vibe-benefits li + li { border-left: 1px solid #ff5a1733; }
 .benefit-icon { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #ff5a1730; border-radius: 50%; color: var(--orange); }
 .benefit-icon svg { width: 25px; height: 25px; }
 .vibe-benefits li > span:last-child { font-size: 9px; font-weight: 600; line-height: 1.35; text-transform: uppercase; }

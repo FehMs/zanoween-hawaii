@@ -2,7 +2,10 @@
   const $=id=>document.getElementById(id),album=$('memory-album');if(!album)return;
   const image=$('story-image'),video=$('story-video'),duration=6000;
   const isVideo=photo=>photo?.type==='video';
-  function stopVideo(target){target.pause();target.removeAttribute('src');target.load();}
+  function stopVideo(target){
+    if(!target?.getAttribute('src'))return;
+    target.pause();target.removeAttribute('src');target.load();
+  }
   function fitMedia(target,photo){const width=target.naturalWidth||target.videoWidth,height=target.naturalHeight||target.videoHeight;target.style.objectFit=width>height?'contain':photo.fit;}
   let photos=[],index=0,playing=false,timer,deadline=0,remaining=duration,visible=false,hovering=false,loaded=false,pointerX=null;
   function clearTimer(){if(timer){remaining=Math.max(0,deadline-performance.now());clearTimeout(timer);timer=null;}}
@@ -49,8 +52,10 @@
   video.addEventListener('ended',()=>{if(playing&&photos.length>1)select(index+1,false);else{playing=false;syncPlayback();}});
   video.addEventListener('timeupdate',()=>{const bar=$('story-bars').children[index]?.children[0];if(bar&&video.duration)bar.style.transform=`scaleX(${Math.min(1,video.currentTime/video.duration)})`;});
   video.addEventListener('error',()=>{if(!isVideo(photos[index]))return;loaded=false;$('story-error').hidden=false;syncPlayback();});
-  function navigate(step){select(index+step);}
-  $('story-prev').addEventListener('click',()=>navigate(-1));$('story-next').addEventListener('click',()=>navigate(1));
+  function navigate(step){pointerX=null;select(index+step);}
+  for(const [id,step]of [['story-prev',-1],['story-next',1]]){
+    $(id).addEventListener('click',event=>{event.preventDefault();event.stopPropagation();navigate(step);});
+  }
   function keys(event){if(event.target.matches('input,textarea'))return;if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();navigate(event.key==='ArrowLeft'?-1:1);}}
   album.addEventListener('keydown',keys);
   function swipe(target){

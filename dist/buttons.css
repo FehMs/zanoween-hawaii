@@ -1,0 +1,117 @@
+/* One button style for the site, checkout and management pages. */
+:root {
+  --button-radius: 6px;
+  --button-height: 48px;
+  --button-icon-size: 44px;
+  --button-color: #e84805;
+  --button-hover-color: #cc3e00;
+  --button-hover-background: #e8480510;
+  --button-font: 'Montserrat', sans-serif;
+}
+
+body :is(button, .ticket, .vibe-whatsapp, .memories-cta, .tickets-notify a,
+  input[type="button"], input[type="submit"], input[type="reset"]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: var(--button-height);
+  padding: 12px 24px;
+  border: 1px solid var(--button-color);
+  border-radius: var(--button-radius);
+  background: transparent;
+  color: var(--button-color);
+  font: 600 12px/1.7 var(--button-font);
+  letter-spacing: normal;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: none;
+  cursor: pointer;
+  filter: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .2s, border-color .2s, color .2s;
+}
+
+body :is(button, .ticket, .vibe-whatsapp, .memories-cta, .tickets-notify a,
+  input[type="button"], input[type="submit"], input[type="reset"]):not(:disabled):hover {
+  border-color: var(--button-hover-color);
+  background: var(--button-hover-background);
+  color: var(--button-hover-color);
+  filter: none;
+}
+
+body :is(button, .ticket, .vibe-whatsapp, .memories-cta, .tickets-notify a,
+  input[type="button"], input[type="submit"], input[type="reset"]):focus-visible {
+  outline: 2px solid var(--button-color);
+  outline-offset: 4px;
+}
+
+body :is(button, input[type="button"], input[type="submit"], input[type="reset"]):disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+body .memories-cta:hover { transform: none; }
+body .vibe-whatsapp > span { margin-left: 0; }
+body :is(.memories-cta, .vibe-whatsapp, .tickets-notify a) > .preview-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* Icon controls use the same border and corners in a compact square. */
+body :is(.story-arrow, .checkout-close, .gallery-move button) {
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+  min-width: var(--button-icon-size);
+  min-height: var(--button-icon-size);
+  padding: 0;
+  flex-shrink: 0;
+  font-size: 24px;
+  line-height: 1;
+}
+
+body button.story-arrow {
+  border: 1px solid #d9c9b5;
+  border-radius: 50%;
+  background: #fffdf9;
+  color: #5a4432;
+  box-shadow: 0 5px 15px #5a443212;
+  z-index: 10;
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+body button.story-arrow:not(:disabled):hover {
+  border-color: #c6af93;
+  background: #f6eee3;
+  color: #5a4432;
+}
+body button.story-arrow > svg { pointer-events: none; }
+.story-peek, .story-sticker, .story-chrome { pointer-events: none; }
+
+body button.story-thumb {
+  width: 44px;
+  height: 56px;
+  min-height: 44px;
+  padding: 3px;
+  border-color: #e8480540;
+  opacity: 1;
+}
+body .story-thumb[aria-current="true"] {
+  border-color: var(--button-color);
+  background: var(--button-hover-background);
+}
+body .story-thumb img, body .story-video-thumb { border-radius: 3px; }
+
+body button.story-retry { display: flex; width: fit-content; }
+
+/* Keep hidden controls hidden when overriding their display type. */
+body :is(button, input[type="button"], input[type="submit"], input[type="reset"])[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body :is(button, .ticket, .vibe-whatsapp, .memories-cta, .tickets-notify a) {
+    transition: none;
+  }
+}
