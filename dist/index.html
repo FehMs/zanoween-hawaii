@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#050506">
   <meta name="description" content="Zanoween. Hawaii Edition, 12.12.26, no Espaço Limão.">
   <title>Zanoween - Hawaii Edition</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
@@ -65,7 +65,7 @@
     <div class="memories-layout">
       <div class="memories-copy">
         <p class="memories-kicker"><span></span> O QUE FICA DEPOIS DA FESTA</p>
-        <h2 id="memories-title">Tem coisas<br>que só quem<br>viveu <em>entende.</em></h2>
+        <h2 id="memories-title">Tem coisas<br> que só quem<br>viveu <em>entende.</em></h2>
         <p class="memories-description">Os encontros, a música, a energia.<br>Um pouco do que já rolou por aqui <br>e da vibe que te espera na próxima.</p>
         <div class="memories-notes"><span>GENTE BOA.</span><span>MÚSICA ALTA.</span><span>MEMÓRIAS REAIS.</span></div>
         <a class="memories-cta" href="#ingressos">Faça parte da próxima <span aria-hidden="true">↗</span></a>
@@ -77,30 +77,25 @@
           <div class="story-peek story-peek-right" aria-hidden="true"><img id="story-peek-right" alt="" hidden></div>
           <article class="story-card" id="story-card">
             <img class="story-image" id="story-image" alt="" decoding="async" hidden>
+            <video class="story-image story-video" id="story-video" controls playsinline muted preload="metadata" aria-label="Vídeo da festa" hidden></video>
             <div class="story-empty" id="story-empty"><img src="assets/hibisco.png" alt="" aria-hidden="true"><span class="story-empty-label">NOSSO ÁLBUM DE MEMÓRIAS</span><strong>A festa passa.<br>A vibe <em>fica.</em></strong><p id="story-empty-message">Preparando os melhores registros…</p></div>
-            <div class="story-chrome" id="story-chrome" hidden><div class="story-bars" id="story-bars" aria-hidden="true"></div><div class="story-brand"><span class="story-avatar">Z.</span><span>ZANOWEEN<small>Do nosso álbum para você.</small></span><button type="button" id="story-expand" aria-label="Ampliar foto">⛶</button></div></div>
+            <div class="story-chrome" id="story-chrome" hidden><div class="story-bars" id="story-bars" aria-hidden="true"></div><div class="story-brand"><img class="story-avatar" src="assets/story-avatar.png" alt="" width="30" height="30"><span>ZANOWEEN<small>Do nosso álbum para você.</small></span></div></div>
             <div class="story-gradient" id="story-gradient" hidden></div>
             <div class="story-caption" id="story-caption" hidden><span class="story-edition">EDIÇÕES ANTERIORES / BONS MOMENTOS</span><h3 id="story-title"></h3><p id="story-description"></p></div>
             <p id="story-error" class="story-error" role="status" hidden>Não foi possível abrir esta foto. Use as setas para continuar.</p>
           </article>
-          <button type="button" class="story-arrow story-prev" id="story-prev" aria-label="Foto anterior" disabled><span aria-hidden="true">←</span></button>
-          <button type="button" class="story-arrow story-next" id="story-next" aria-label="Próxima foto" disabled><span aria-hidden="true">→</span></button>
+          <button type="button" class="story-arrow story-prev" id="story-prev" aria-label="Foto anterior" disabled><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left preview-icon" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>
+          <button type="button" class="story-arrow story-next" id="story-next" aria-label="Próxima foto" disabled><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right preview-icon" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
           <span class="story-sticker" aria-hidden="true">GOOD<br>TIMES ✳</span>
         </div>
-        <div class="album-controls"><span id="story-position">ÁLBUM DA FESTA</span><button type="button" id="story-play" aria-label="Reproduzir fotos automaticamente" aria-pressed="false" hidden>▷ Reproduzir</button><span class="album-hint">arraste ou use as setas <span aria-hidden="true">↔</span></span></div>
+        <div class="album-controls"><span id="story-position">ÁLBUM DA FESTA</span></div>
         <div class="story-thumbnails" id="story-thumbnails" aria-label="Escolher foto" hidden></div>
         <p id="story-status" class="sr-only" role="status" aria-live="polite"></p>
         <button type="button" class="story-retry" id="story-retry" hidden>Tentar carregar novamente ↻</button>
       </div>
     </div>
-    <div class="memories-bottom"><span>COLECIONANDO NOITES INESQUECÍVEIS.</span><span aria-hidden="true">✳</span><span>A PRÓXIMA MEMÓRIA PODE SER SUA.</span></div>
+    <div class="memories-bottom"><span>COLECIONANDO NOITES INESQUECÍVEIS.</span><span aria-hidden="true"></span><span>A PRÓXIMA MEMÓRIA PODE SER SUA.</span></div>
   </section>
-  <dialog id="story-dialog" class="story-dialog" aria-label="Galeria de fotos ampliada">
-    <button type="button" id="story-close" class="story-dialog-close" aria-label="Fechar foto ampliada">×</button>
-    <div class="story-dialog-inner"><img id="story-large" alt=""><div class="story-dialog-caption"><h3 id="story-large-title"></h3><p id="story-large-caption"></p></div></div>
-    <button type="button" id="story-large-prev" class="story-arrow story-prev" aria-label="Foto anterior">←</button><button type="button" id="story-large-next" class="story-arrow story-next" aria-label="Próxima foto">→</button>
-    <p id="story-large-position" class="story-large-position" aria-live="polite"></p>
-  </dialog>
 
   <section class="tickets-section" id="ingressos" aria-labelledby="tickets-title">
     <div class="tickets-inner">

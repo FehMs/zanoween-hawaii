@@ -42,7 +42,7 @@ function createAdmin({ env = process.env, db, storage, now = Date.now } = {}) {
         }
         if (!authorized(req)) common.fail(401,'Entre para acessar o painel.');
         if (data.action === 'logout') { cookie(res,'',0); return common.json(res,200,{ok:true}); }
-        if (['uploadPhoto','savePhoto','movePhoto'].includes(data.action)) {
+        if (['uploadPhoto','savePhoto','movePhoto','prepareVideo','completeVideo'].includes(data.action)) {
           return common.json(res,200,{ok:true,...await manageGallery(data,{db:database(),env,storage})});
         }
         if (data.action === 'saveLot') {
