@@ -58,7 +58,7 @@ test('production checkout refuses sandbox accounts and historical test records',
   assert.throws(()=>verifyOrder(remote(),{...local,is_test:true},account,env),/registro/);
   assert.equal(settings({...env,MERCADO_PAGO_ENVIRONMENT:'test'}).ready,false);
 });
-test('real confirmation includes the unique ticket and no test confirmation',()=>{
+test('real confirmation omits the unique ticket and has no test confirmation',()=>{
   const message=renderPurchaseEmail({fullName:'Pessoa Teste',gender:'homem',priceCents:5000,lot:1,entryToken:id,orderId:id});
-  assert.ok(!message.subject.includes('[TESTE]'));assert.match(message.html,/PAGAMENTO CONFIRMADO/);assert.ok(message.html.includes(id));assert.ok(!message.html.includes('SEM VALIDADE PARA ENTRADA'));
+  assert.ok(!message.subject.includes('[TESTE]'));assert.match(message.html,/PAGAMENTO CONFIRMADO/);assert.ok(!message.html.includes(id));assert.ok(!message.text.includes(id));assert.ok(!message.html.includes('SEM VALIDADE PARA ENTRADA'));
 });

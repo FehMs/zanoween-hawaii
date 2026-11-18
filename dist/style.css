@@ -337,7 +337,8 @@ body:has(.checkout-dialog[open]) { overflow: hidden; }
 .pix-image { display: block; max-width: 100%; height: auto; margin: 20px auto; background: white; }
 .pix-image[hidden] { display: none; }
 .checkout-field textarea { display: block; width: 100%; margin: 10px 0; padding: 12px; resize: vertical; border: 1px solid #dedbd7; border-radius: 10px; background: #fff; color: #302318; font-size: 14px; overflow-wrap: anywhere; }
-.paid-ticket-code { display: block; padding: 18px; border: 1px dashed #e84805; border-radius: 12px; font-size: 18px; overflow-wrap: anywhere; }
+.checkout-status-label { margin: -8px 0 24px; text-align: center; }
+.checkout-payment-status { display: inline-block; padding: 7px 14px; border: 1px solid #f0d6bd; border-radius: 999px; background: #fff1e6; color: #71401f; font-size: 12px; font-weight: 600; line-height: 1.5; }
 
 @media (max-width: 600px) {
   .checkout-dialog { padding: 30px 22px 24px; border-radius: 18px; }

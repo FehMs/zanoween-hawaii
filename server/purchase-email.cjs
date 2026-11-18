@@ -24,12 +24,11 @@ function renderPurchaseEmail({fullName,gender,priceCents,lot=1,entryToken,orderI
 <tr><td style="padding:8px 18px;">Ingresso</td><td style="padding:8px 18px;text-align:right;">${lot}º lote · ${category}</td></tr>
 <tr><td style="padding:8px 18px;">Valor pago</td><td style="padding:8px 18px;text-align:right;"><strong>${price}</strong></td></tr>
 <tr><td style="padding:8px 18px 18px;">Pagamento</td><td style="padding:8px 18px 18px;text-align:right;">Pix confirmado</td></tr></table>
-<p style="margin:24px 0 8px;font-size:13px;"><strong>Código único do ingresso</strong></p><p style="padding:18px;border:1px dashed #ff5a17;border-radius:10px;font-family:monospace;font-size:16px;word-break:break-all;">${entryToken}</p><p style="color:#6c5d50;font-size:11px;line-height:1.7;">Uso único. Não compartilhe este código. Pedido: ${orderId}</p>
 <p style="margin:24px 0 8px;font-size:15px;"><strong>12.12.26 · Espaço Limão</strong></p><p style="margin:0 0 24px;color:#6c5d50;font-size:13px;line-height:1.7;">O endereço completo será enviado pela organização antes do evento.</p>
 <p style="padding:16px;border-left:3px solid #ff5a17;background:#fff4e9;font-size:13px;line-height:1.7;"><strong>Seu nome, seu ingresso.</strong><br>A entrada só será liberada mediante apresentação do RG, com nome correspondente ao do ingresso.</p>
-<p style="margin:24px 0 0;font-size:12px;line-height:1.7;color:#6c5d50;">Apresente o código deste ingresso e seu RG à equipe de entrada. O código será validado uma única vez.</p></td></tr>
+<p style="margin:24px 0 0;font-size:12px;line-height:1.7;color:#6c5d50;">Apresente seu RG à equipe de entrada, com nome correspondente ao ingresso.</p></td></tr>
 <tr><td style="padding:20px 28px;border-top:1px solid #eee4d8;color:#8a7765;font-size:11px;">Zanoween · Hawaii Edition</td></tr></table></td></tr></table></body></html>`,
-    text:`ZANOWEEN - HAWAII EDITION\nPAGAMENTO CONFIRMADO\n\nOlá, ${fullName}.\n1 ingresso · ${lot}º lote · ${category}\nValor pago: ${price} via Pix\nCódigo único: ${entryToken}\nPedido: ${orderId}\n12.12.26 · Espaço Limão\nApresente este código e seu RG com nome correspondente ao ingresso. Uso único. O endereço completo será enviado pela organização antes do evento.`
+    text:`ZANOWEEN - HAWAII EDITION\nPAGAMENTO CONFIRMADO\n\nOlá, ${fullName}.\n1 ingresso · ${lot}º lote · ${category}\nValor pago: ${price} via Pix\n12.12.26 · Espaço Limão\nApresente seu RG com nome correspondente ao ingresso. O endereço completo será enviado pela organização antes do evento.`
   };
 }
 module.exports={renderPurchaseEmail};

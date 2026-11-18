@@ -21,7 +21,7 @@
   const message=text=>{result.textContent=text;result.hidden=false;};
   function setBusy(value,blocking=false){busy=value;submit.disabled=value||!config.checkoutEnabled;close.disabled=value&&blocking;form.setAttribute('aria-busy',String(value));submit.textContent=value?'Aguarde…':config.checkoutEnabled?'Gerar Pix':'Vendas em breve';}
   function heading(title,copy){byId('checkout-title').textContent=title;byId('checkout-preview').textContent=copy;}
-  function loading(){form.hidden=true;payment.hidden=false;byId('pix-details').hidden=true;byId('paid-ticket').hidden=true;byId('refresh-payment').hidden=true;byId('new-purchase').hidden=true;byId('checkout-spinner').hidden=false;byId('checkout-success-icon').hidden=true;byId('payment-message').textContent='';heading('Preparando seu Pix','Só um instante. Estamos deixando tudo pronto.');}
+  function loading(){form.hidden=true;payment.hidden=false;byId('pix-details').hidden=true;byId('paid-ticket').hidden=true;byId('refresh-payment').hidden=true;byId('new-purchase').hidden=true;byId('checkout-spinner').hidden=false;byId('checkout-success-icon').hidden=true;byId('payment-message').textContent='';byId('checkout-payment-status').textContent='Preparando seu Pix';heading('Preparando seu Pix','Só um instante. Estamos deixando tudo pronto.');}
   async function api(path,data){
     let response;
     try{response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),signal:AbortSignal.timeout(55000)});}catch{throw new Error('A conexão oscilou. Estamos conferindo sua compra; não gere outro pagamento.');}
@@ -58,14 +58,14 @@
     const pending=order.status==='pending',paid=order.status==='paid',emailed=paid&&order.emailStatus==='sent';
     byId('checkout-spinner').hidden=emailed||(!pending&&!paid);byId('checkout-success-icon').hidden=!emailed;
     byId('payment-message').textContent='';byId('refresh-payment').hidden=true;
-    byId('pix-details').hidden=!pending||!order.pixCode;byId('paid-ticket').hidden=!paid||!order.ticketCode;
-    byId('paid-ticket-code').textContent=order.ticketCode||'';byId('pix-code').value=order.pixCode||'';
+    byId('pix-details').hidden=!pending||!order.pixCode;byId('paid-ticket').hidden=!paid;
+    byId('checkout-payment-status').textContent=pending?(order.pixCode?'Aguardando pagamento':'Preparando seu Pix'):paid?(emailed?'Pagamento confirmado':'Enviando confirmação por e-mail'):order.status==='refunded'?'Pagamento estornado':'Pix encerrado';byId('pix-code').value=order.pixCode||'';
     const image=byId('pix-image');image.hidden=!pending||!order.pixImage;
     if(pending&&order.pixImage&&/^[A-Za-z0-9+/=\r\n]+$/.test(order.pixImage))image.src=`data:image/png;base64,${order.pixImage}`;
     if(paid)heading('Pagamento confirmado!',emailed?'Enviamos as informações e seu ingresso para o seu e-mail.':'Estamos finalizando o envio das informações para seu e-mail.');
     else if(pending)heading(order.pixCode?'Pague com Pix':'Preparando seu Pix',order.pixCode?'Pague '+money.format(order.priceCents/100)+'. A confirmação aparece aqui automaticamente.':'Seu Pix está sendo preparado. Só mais um instante.');
     else heading(order.status==='refunded'?'Pagamento estornado':'Pix encerrado',order.status==='refunded'?'Este ingresso não é válido.':'Você pode iniciar uma nova compra.');
-    byId('ticket-email-status').textContent=emailed?'E-mail enviado. Confira sua caixa de entrada e a pasta de spam.':'Seu ingresso está disponível acima. Estamos cuidando do envio por e-mail.';
+    byId('ticket-email-status').textContent=emailed?'E-mail enviado. Confira sua caixa de entrada e a pasta de spam.':'Estamos enviando as informações do seu ingresso por e-mail.';
     byId('new-purchase').hidden=pending;
     clearTimeout(timer);if(pending||(paid&&!emailed))schedule();
   }

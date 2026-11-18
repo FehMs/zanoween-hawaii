@@ -188,6 +188,7 @@
     </form>
     <section id="checkout-payment" class="checkout-payment" hidden aria-label="Pagamento e ingresso">
       <div class="checkout-status-art" aria-hidden="true"><span id="checkout-spinner" class="checkout-spinner"></span><svg id="checkout-success-icon" viewBox="0 0 48 48" fill="none" hidden><path d="m13 24 7 7 15-15" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="checkout-status-label"><span id="checkout-payment-status" class="checkout-payment-status" role="status" aria-live="polite"></span></div>
       <p id="payment-message" role="status"></p>
       <div id="pix-details" hidden>
         <img id="pix-image" class="pix-image" alt="QR Code para pagamento do ingresso via Pix" width="240" height="240" hidden>
@@ -195,7 +196,7 @@
         <button type="button" class="ticket-action ticket-action-primary" id="copy-pix">Copiar código Pix</button>
         <p class="checkout-footnote">A confirmação aparece automaticamente. Confira o prazo de vencimento no aplicativo do seu banco.</p>
       </div>
-      <div id="paid-ticket" hidden><p>Guarde o código único do seu ingresso e apresente seu RG na entrada.</p><strong id="paid-ticket-code" class="paid-ticket-code"></strong><p id="ticket-email-status" class="checkout-footnote"></p></div>
+      <div id="paid-ticket" hidden><p>Apresente seu RG na entrada, com o nome correspondente ao ingresso.</p><p id="ticket-email-status" class="checkout-footnote"></p></div>
       <button type="button" class="ticket-action" id="refresh-payment" hidden>Tentar novamente</button>
       <button type="button" class="ticket-action" id="new-purchase" hidden>Comprar outro ingresso</button>
     </section>
