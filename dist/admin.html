@@ -1,16 +1,52 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101813"><title>Admin · Zanoween</title><link rel="icon" href="/assets/favicon.ico" type="image/x-icon"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/admin.css"><link rel="stylesheet" href="/buttons.css"><script src="/admin-gallery.js" defer></script><script src="/admin.js" defer></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#101813"><title>Admin · Zanoween</title><link rel="icon" href="/assets/favicon.ico" type="image/x-icon"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/admin.css"><link rel="stylesheet" href="/buttons.css"><script src="/admin-gallery.js" defer></script><script src="/admin-finance.js" defer></script><script src="/admin.js" defer></script></head>
 <body><div class="shell">
-  <aside><a class="brand" href="/admin">ZANOWEEN<span>HAWAII EDITION / ADMIN</span></a><nav aria-label="Administração"><a href="#lotes">01 <span>Lotes e ingressos</span></a><a href="#conteudo">02 <span>Conteúdo do site</span></a><a href="#parceiros">03 <span>Parceiros</span></a><a href="#fotos">04 <span>Galeria de fotos</span></a></nav><a class="site-link" href="/" target="_blank" rel="noopener">Abrir site ↗</a><p class="aside-note">Tudo pronto para<br>o próximo encontro.</p></aside>
+  <aside><a class="brand" href="/admin">ZANOWEEN<span>HAWAII EDITION / ADMIN</span></a><nav aria-label="Administração"><a href="#financeiro">00 <span>Dashboard financeiro</span></a><a href="#lotes">01 <span>Lotes e ingressos</span></a><a href="#conteudo">02 <span>Conteúdo do site</span></a><a href="#parceiros">03 <span>Parceiros</span></a><a href="#fotos">04 <span>Galeria de fotos</span></a><a href="#pagamentos">05 <span>Pagamentos confirmados</span></a></nav><a class="site-link" href="/" target="_blank" rel="noopener">Abrir site ↗</a><p class="aside-note">Tudo pronto para<br>o próximo encontro.</p></aside>
   <main><header><div><p class="eyebrow">BASTIDORES DA FESTA</p><h1>Painel de controle<span>.</span></h1></div><button id="logout" class="secondary" hidden>Sair da conta</button></header>
     <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
     <section id="login-panel" class="panel login" hidden><span class="pill">ACESSO RESTRITO</span><h2>Entre nos bastidores.</h2><p>Use a senha da organização para gerenciar o evento.</p><form id="login-form"><label for="password">Senha de administrador</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="256"><button type="submit">Entrar no painel →</button></form><small>A sessão dura até 8 horas.</small></section>
     <p id="loading" role="status">Carregando painel…</p>
     <div id="dashboard" hidden>
+      <section id="financeiro" class="finance-section" aria-labelledby="finance-title">
+        <div class="section-heading"><div><p class="eyebrow">DASHBOARD FINANCEIRO</p><h2 id="finance-title">As contas da festa.</h2></div><button id="finance-toggle" type="button" class="secondary" aria-expanded="false" aria-controls="finance-content">Abrir dashboard financeiro</button></div>
+        <div id="finance-content" hidden>
+        <button id="finance-refresh" type="button" class="secondary">Atualizar financeiro ↻</button>
+        <p class="help">Resultado parcial = receita dos ingressos pagos − gastos cadastrados. Inclua as taxas do pagamento nos gastos. Pedidos pendentes, de teste e estornados ficam fora da receita.</p>
+        <p id="finance-notice" class="notice" role="status" aria-live="polite" hidden></p>
+        <div class="finance-stats" aria-label="Resumo financeiro">
+          <article><span>Receita confirmada</span><strong id="finance-revenue">—</strong><small>Ingressos com pagamento confirmado</small></article>
+          <article><span>Gastos cadastrados</span><strong id="finance-expenses">—</strong><small id="finance-expense-count">—</small></article>
+          <article id="finance-result-card"><span id="finance-result-label">Lucro parcial</span><strong id="finance-profit">—</strong><small id="finance-margin">—</small></article>
+        </div>
+        <div class="panel finance-chart" aria-label="Comparação entre receita e gastos">
+          <div><span>Receita</span><div class="finance-track"><div id="finance-revenue-bar" class="finance-bar"></div></div><strong id="finance-chart-revenue">—</strong></div>
+          <div><span>Gastos</span><div class="finance-track"><div id="finance-expense-bar" class="finance-bar expense-bar"></div></div><strong id="finance-chart-expenses">—</strong></div>
+        </div>
+        <form id="expense-form" class="panel expense-form">
+          <h3 id="expense-form-title">Adicionar gasto</h3><input name="expenseId" type="hidden">
+          <label class="expense-description">Descrição<input name="description" minlength="2" maxlength="160" placeholder="Ex.: aluguel do espaço" required></label>
+          <label>Categoria<select name="category" required><option value="estrutura">Estrutura</option><option value="bebidas">Bebidas</option><option value="alimentacao">Alimentação</option><option value="equipe">Equipe</option><option value="divulgacao">Divulgação</option><option value="taxas">Taxas</option><option value="outros">Outros</option></select></label>
+          <label>Data<input name="expenseDate" type="date" min="2000-01-01" max="2100-12-31" required></label>
+          <label>Valor (R$)<input name="amount" type="text" inputmode="decimal" placeholder="0,00" autocomplete="off" required maxlength="12"></label>
+          <div class="expense-form-actions"><button id="expense-submit" type="submit">Salvar gasto</button><button id="expense-cancel" type="button" class="secondary" hidden>Cancelar edição</button></div>
+        </form>
+        <div class="section-heading expense-list-heading"><h3>Gastos do evento</h3><span id="expense-page" role="status"></span></div>
+        <p id="expense-empty" class="panel" hidden>Nenhum gasto cadastrado. Adicione o primeiro gasto acima.</p>
+        <div id="expense-table" class="paid-table expense-table" role="region" aria-label="Lista de gastos" tabindex="0" hidden><table><thead><tr><th scope="col">Descrição</th><th scope="col">Categoria</th><th scope="col">Data</th><th scope="col">Valor</th><th scope="col">Ações</th></tr></thead><tbody id="expense-list"></tbody></table></div>
+        <div class="paid-pagination"><button id="expense-prev" type="button" class="secondary" hidden>Anterior</button><button id="expense-next" type="button" class="secondary" hidden>Próxima</button></div>
+        </div>
+      </section>
       <section class="stats" aria-label="Resumo de vendas"><div><span>Ingressos pagos</span><strong id="total-paid">-</strong></div><div><span>Reservas pendentes</span><strong id="total-pending">-</strong></div><div><span>Receita confirmada</span><strong id="total-revenue">-</strong></div></section>
       <p id="checkout-warning" class="warning" hidden>O checkout está desativado ou a configuração de pagamentos está incompleta no servidor. Os lotes podem ser editados, mas as compras só serão liberadas após a configuração.</p>
       <section id="lotes"><div class="section-heading"><div><p class="eyebrow">INGRESSOS</p><h2>Cada lote, no seu tempo.</h2></div><button id="refresh" class="secondary">Atualizar resumo ↻</button></div><p class="help">Libere ou pause os lotes, ajuste os valores e acompanhe as vagas. As compras já iniciadas mantêm o preço original.</p><div id="lot-list" class="lot-grid"></div></section>
+      <section id="pagamentos" class="paid-section" aria-labelledby="paid-title">
+        <div class="section-heading"><div><p class="eyebrow">PAGAMENTOS CONFIRMADOS</p><h2 id="paid-title">Quem já garantiu o ingresso.</h2></div><button id="paid-refresh" class="secondary" type="button">Atualizar lista ↻</button></div>
+        <p class="help">Pessoas com pagamento confirmado, da confirmação mais recente para a mais antiga. Horários de Brasília.</p>
+        <p id="paid-empty" class="panel" hidden>Nenhum pagamento confirmado ainda.</p>
+        <div id="paid-table" class="paid-table" role="region" aria-label="Lista de pessoas com pagamento confirmado" tabindex="0" hidden><table><thead><tr><th scope="col">Nome</th><th scope="col">E-mail</th><th scope="col">Telefone</th><th scope="col">Ingresso</th><th scope="col">Valor pago</th><th scope="col">Confirmado em</th></tr></thead><tbody id="paid-list"></tbody></table></div>
+        <div class="paid-pagination"><button id="paid-prev" class="secondary" type="button" hidden>Anterior</button><span id="paid-page" role="status"></span><button id="paid-next" class="secondary" type="button" hidden>Próxima</button></div>
+      </section>
       <section id="parceiros" class="partners-section"><div class="section-heading"><div><p class="eyebrow">QUEM DIVULGA A FESTA</p><h2>Parceiros e indicações.</h2></div></div><p class="help">Cadastre um código para cada divulgador. Acompanhe as compras pagas e pendentes por código.</p>
         <form id="partner-form" class="panel partner-form"><label>Nome do parceiro<input name="name" minlength="2" maxlength="120" required placeholder="Nome do divulgador"></label><label>Código<input name="code" minlength="3" maxlength="32" pattern="(?:[A-Za-z0-9_]|-){3,32}" autocapitalize="characters" autocomplete="off" spellcheck="false" required placeholder="MARIA10"><small>De 3 a 32 letras, números, hífen ou sublinhado.</small></label><button type="submit">Cadastrar parceiro →</button></form>
         <div id="partner-list" class="partner-list"></div>

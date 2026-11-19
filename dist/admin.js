@@ -2,13 +2,30 @@
   const $=id=>document.getElementById(id);
   const money=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
   function notice(text,error=false){$('notice').textContent=text;$('notice').hidden=!text;$('notice').classList.toggle('error',error);}
-  function showLogin(){ $('login-panel').hidden=false;$('dashboard').hidden=true;$('logout').hidden=true;$('loading').hidden=true; }
-  async function api(data){
-    const response=await fetch('/api/admin',{method:data?'POST':'GET',credentials:'same-origin',cache:'no-store',headers:data?{'Content-Type':'application/json'}:{},body:data?JSON.stringify(data):undefined,signal:AbortSignal.timeout(20000)});
+  function showLogin(){ window.zanoweenFinance?.hide();$('login-panel').hidden=false;$('dashboard').hidden=true;$('logout').hidden=true;$('loading').hidden=true; }
+  async function api(data,url='/api/admin'){
+    const response=await fetch(url,{method:data?'POST':'GET',credentials:'same-origin',cache:'no-store',headers:data?{'Content-Type':'application/json'}:{},body:data?JSON.stringify(data):undefined,signal:AbortSignal.timeout(20000)});
     const payload=await response.json();
     if(!response.ok){if(response.status===401)showLogin();throw new Error(payload.error||'Não foi possível concluir.');}return payload;
   }
   async function action(button,fn){button.disabled=true;notice('');try{await fn();}catch(error){notice(error.message||'Confira sua conexão e tente novamente.',true);}finally{button.disabled=false;}}
+  let paidPage=0;
+  const paidDate=new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short',timeZone:'America/Sao_Paulo'});
+  async function loadPaid(page=0){
+    const data=await api(null,`/api/admin?view=paid&page=${page}`);
+    const rows=data.people.map(person=>{
+      const row=document.createElement('tr'),product=person.ticket_products;
+      const cells=[person.full_name,person.email,person.phone||'—',product?`${product.lot}º lote · ${product.gender==='mulher'?'Mulher':'Homem'}`:'—',money.format(person.price_cents/100),person.paid_at?paidDate.format(new Date(person.paid_at)):'—'];
+      for(const value of cells){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}return row;
+    });
+    $('paid-list').replaceChildren(...rows);paidPage=data.page;
+    $('paid-empty').hidden=data.people.length>0;$('paid-table').hidden=!data.people.length;
+    $('paid-page').textContent=`Página ${paidPage+1}`;
+    $('paid-prev').hidden=paidPage===0;$('paid-next').hidden=!data.hasMore;
+  }
+  $('paid-prev').addEventListener('click',()=>action($('paid-prev'),()=>loadPaid(paidPage-1)));
+  $('paid-next').addEventListener('click',()=>action($('paid-next'),()=>loadPaid(paidPage+1)));
+  $('paid-refresh').addEventListener('click',()=>action($('paid-refresh'),()=>loadPaid()));
   function renderLots(lots){
     $('lot-list').replaceChildren();
     for(const lot of lots){
@@ -28,6 +45,8 @@
     $('total-paid').textContent=snapshot.lots.reduce((n,l)=>n+Number(l.paid),0);$('total-pending').textContent=snapshot.lots.reduce((n,l)=>n+Number(l.pending),0);$('total-revenue').textContent=money.format(snapshot.lots.reduce((n,l)=>n+Number(l.revenue),0)/100);
     $('checkout-warning').hidden=snapshot.checkoutReady;renderLots(snapshot.lots);
     renderPartners(snapshot.partners||[]);
+    await window.zanoweenFinance?.load();
+    await loadPaid();
     window.zanoweenGallery?.render(snapshot.content.gallery||[]);
     if(fillContent)for(const [key,value]of Object.entries(snapshot.content))if($('content-form').elements[key])$('content-form').elements[key].value=value;
   }

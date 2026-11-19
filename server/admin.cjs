@@ -19,6 +19,7 @@ function createAdmin({ env = process.env, db, storage, now = Date.now } = {}) {
   }
   return async (req, res) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
+    let financeRequest=false;
     try {
       if (!['GET','POST'].includes(req.method)) { res.setHeader('Allow','GET, POST'); common.fail(405,'Método não permitido.'); }
       if (!env.ADMIN_PASSWORD || env.ADMIN_PASSWORD.length < 32) common.fail(503,'Configure ADMIN_PASSWORD com pelo menos 32 caracteres no servidor.');
@@ -41,11 +42,20 @@ function createAdmin({ env = process.env, db, storage, now = Date.now } = {}) {
           return common.json(res,200,{ok:true});
         }
         if (!authorized(req)) common.fail(401,'Entre para acessar o painel.');
+        financeRequest=['saveExpense','deleteExpense'].includes(data.action);
         if (data.action === 'logout') { cookie(res,'',0); return common.json(res,200,{ok:true}); }
         if (['uploadPhoto','savePhoto','movePhoto','prepareVideo','completeVideo'].includes(data.action)) {
           return common.json(res,200,{ok:true,...await manageGallery(data,{db:database(),env,storage})});
         }
-        if (data.action === 'saveLot') {
+        if (data.action === 'saveExpense') {
+          const {id,amountCents,category,expenseDate}=data;
+          const description=typeof data.description==='string'?data.description.trim():'';
+          if(!common.uuid.test(id||'') || !Number.isSafeInteger(amountCents) || amountCents<=0 || amountCents>100000000 || !['estrutura','bebidas','alimentacao','equipe','divulgacao','taxas','outros'].includes(category) || description.length<2 || description.length>160 || /[\x00-\x1f\x7f]/.test(description) || typeof expenseDate!=='string' || !/^20\d{2}-\d{2}-\d{2}$|^2100-\d{2}-\d{2}$/.test(expenseDate) || !Number.isFinite(Date.parse(expenseDate)) || new Date(expenseDate).toISOString().slice(0,10)!==expenseDate) common.fail(400,'Confira a descrição, categoria, data e valor do gasto.');
+          await database().request('event_expenses?on_conflict=id',{method:'POST',prefer:'resolution=merge-duplicates,return=minimal',body:{id,description,category,amount_cents:amountCents,expense_date:expenseDate}});
+        } else if (data.action === 'deleteExpense') {
+          if(!common.uuid.test(data.id||'')) common.fail(400,'Gasto inválido.');
+          await database().request(`event_expenses?id=eq.${data.id}`,{method:'DELETE'});
+        } else if (data.action === 'saveLot') {
           const {lot,capacity,femalePrice,malePrice,enabled} = data;
           if (![1,2,3].includes(lot) || !Number.isInteger(capacity) || capacity < 1 || capacity > 100000 || ![femalePrice,malePrice].every(x => Number.isInteger(x) && x > 0 && x <= 10000000) || typeof enabled !== 'boolean') common.fail(400,'Confira a quantidade e os preços do lote.');
           await database().request('rpc/admin_save_lot',{method:'POST',body:{p_lot:lot,p_capacity:capacity,p_female_price:femalePrice,p_male_price:malePrice,p_enabled:enabled}});
@@ -62,10 +72,27 @@ function createAdmin({ env = process.env, db, storage, now = Date.now } = {}) {
         return common.json(res,200,{ok:true});
       }
       if (!authorized(req)) common.fail(401,'Entre para acessar o painel.');
+      const query = new URL(req.url || '/api/admin', 'http://localhost').searchParams;
+      if (query.get('view') === 'finance') {
+        financeRequest=true;
+        const page=Number(query.get('page')||0);
+        if(!Number.isSafeInteger(page) || page<0 || page>100000) common.fail(400,'Página inválida.');
+        const finance=await database().request('rpc/admin_finance',{method:'POST',body:{p_page:page}});
+        return common.json(res,200,finance);
+      }
+      if (query.get('view') === 'paid') {
+        const page = Number(query.get('page') || 0);
+        if (!Number.isSafeInteger(page) || page < 0 || page > 100000) common.fail(400,'Página inválida.');
+        const people = await database().request(`orders?status=eq.paid&is_test=eq.false&select=full_name,email,phone,price_cents,paid_at,ticket_products(lot,gender)&order=paid_at.desc,id.desc&limit=51&offset=${page * 50}`);
+        return common.json(res,200,{people:people.slice(0,50),hasMore:people.length>50,page});
+      }
       const snapshot = await database().request('rpc/admin_dashboard',{method:'POST',body:{}});
       const partners=await database().request('rpc/admin_partner_stats',{method:'POST',body:{}});
       common.json(res,200,{...snapshot,partners,content:{...defaults,...snapshot.content},checkoutReady:common.settings(env).ready});
     } catch (error) {
+      if (financeRequest) {
+        if (!error.httpStatus) return common.json(res,503,{error:'Não foi possível acessar o financeiro. Confira a conexão e aplique a migração 202611190001_finance.sql no Supabase.'});
+      }
       if (error.reason === 'capacity_below_reserved') return common.json(res,409,{error:'A quantidade não pode ser menor que os ingressos pagos e reservados.'});
       if (error.httpStatus) return common.json(res,error.httpStatus,{error:error.message});
       common.json(res,503,{error:'Não foi possível acessar o painel. Confira a conexão e execute as migrações de administração e parceiros no Supabase.'});
